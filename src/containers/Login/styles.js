@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import colors from '../../global/colors';
 import fonts from '../../global/fonts';
 
@@ -13,6 +14,16 @@ export default styles = {
   fonts.logoFont],
   loginForm: {
     flex: 1,
-    justifyContent: 'center',
+    marginTop: 50,
+  },
+  errorMessage: [{
+    color: colors.error,
+    textAlign: 'center',
+    marginTop: 15,
+  },
+  fonts.plainText],
+  toggleHasAccountButton: {
+    alignItems: 'center',
+    marginTop: 15,
   },
 };
