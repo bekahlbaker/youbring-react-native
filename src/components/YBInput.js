@@ -11,7 +11,6 @@ const styles = {
     height: 50,
     borderRadius: 10,
     justifyContent: 'center',
-    marginTop: 25,
     backgroundColor: colors.inputBackgroundColor,
   },
   text: [{
@@ -23,6 +22,7 @@ const styles = {
 const YBInput = ({
   placeholder,
   width,
+  secureTextEntry,
 }) => (
   <View style={[styles.YBInputStyle, { width }]}>
     <TextInput
@@ -30,6 +30,7 @@ const YBInput = ({
       placeholder={placeholder}
       underlineColorAndroid={colors.inputBackgroundColor}
       clearButtonMode='while-editing'
+      secureTextEntry={secureTextEntry}
     />
   </View>
 );
@@ -37,11 +38,13 @@ const YBInput = ({
 YBInput.propTypes = {
   placeholder: PropTypes.string,
   width: PropTypes.number,
+  secureTextEntry: PropTypes.bool,
 };
 
 YBInput.defaultProps = {
   placeholder: null,
   width: 300,
+  secureTextEntry: false,
 };
 
 export default YBInput;

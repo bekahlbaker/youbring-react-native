@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StackNavigator } from 'react-navigation';
+import { TouchableOpacity, View, Text } from 'react-native';
 import YBButton from '../../components/YBButton';
 import YBInput from '../../components/YBInput';
 import styles from './styles';
@@ -22,7 +20,6 @@ class Login extends Component {
   }
 
   handleLogin = () => {
-    console.log(this.state.email);
     if (!this.state.email.includes('@')) {
       this.setState({ errorMessage: 'Please enter a valid email address.'});
     } else {
@@ -31,7 +28,13 @@ class Login extends Component {
   }
 
   handleSignUp = () => {
-    this.props.navigation.navigate('Dashboard')
+    if (!this.state.email.includes('@')) {
+      this.setState({ errorMessage: 'Please enter a valid email address.'});
+    } else if (this.state.password !== this.state.password2) {
+      this.setState({ errorMessage: 'Passwords do not match.'})
+    } else {
+      this.props.navigation.navigate('Dashboard')
+    }
   }
 
   toggleHasAccount = () => {
@@ -52,23 +55,28 @@ class Login extends Component {
     if (!this.state.hasAccount) {
       return (
         <View>
+        <View style={{ paddingTop: 25 }}>
           <YBInput
+            secureTextEntry={true}
             placeholder='Password'
-            value={this.state.password}
-            onChangeText={(password) => this.setState({ password })}
           />
-          <YBInput
-            placeholder='Confirm password'
-            value={this.state.password2}
-            onChangeText={(password2) => this.setState({ password2 })}
-          />
+        </View>
+          <View style={{ paddingTop: 25 }}>
+            <YBInput
+              secureTextEntry={true}
+              placeholder='Confirm password'
+            />
+          </View>
         </View>
       );
     }
     return (
-      <YBInput
-        placeholder='Password'
-      />
+      <View style={{ paddingTop: 25 }}>
+        <YBInput
+          secureTextEntry={true}
+          placeholder='Password'
+        />
+      </View>
     );
   }
 
@@ -79,11 +87,11 @@ class Login extends Component {
           <Text style={styles.logo}>YouBring</Text>
         </View>
         <View style={styles.loginForm}>
-          <YBInput
-            placeholder='Email'
-            value={this.state.email}
-            onChangeText={(email) => this.setState({ email })}
-          />
+          <View style={{ paddingTop: 25 }}>
+            <YBInput
+              placeholder='Email'
+            />
+          </View>
         {this.renderPasswordInput()}
           <YBButton
             title={this.state.hasAccount ? 'Login' : 'Sign Up'}

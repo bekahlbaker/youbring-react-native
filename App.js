@@ -1,23 +1,12 @@
-import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react';
+import { View, Text, TouchableOpacity, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 import Login from './src/containers/Login/index';
+import Dashboard from './src/containers/Dashboard/index';
+import Settings from './src/containers/Settings/index';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types */
-
-const Dashboard = () => (
-  <View
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#67809F',
-    }}
-  >
-    <Text>Dashboard</Text>
-  </View>
-);
 
 const RootNavigator = StackNavigator({
   Login: {
@@ -28,9 +17,9 @@ const RootNavigator = StackNavigator({
   },
   Dashboard: {
     screen: Dashboard,
-    navigationOptions: {
-      headerTitle: 'Dashboard',
-    },
+  },
+  Settings: {
+    screen: Settings,
   },
 });
 

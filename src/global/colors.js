@@ -1,5 +1,5 @@
 export default colors = {
-  viewBackgroundColor: '#ECECEC',
+  viewBackgroundColor: '#FFFFFF',
   mainColor: '#F2784B',
   lightTextColor: '#FFFFFF',
   darkTextColor: '#22313F',
