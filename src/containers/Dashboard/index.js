@@ -15,14 +15,9 @@ class Dashboard extends Component {
     headerTitleStyle: [{ alignSelf: 'center', color: colors.darkTextColor }, fonts.plainText],
     headerLeft: (
       <View />
-    //   <TouchableOpacity style={{ marginLeft: 16 }} onPress={() => navigation.goBack()} >
-    //   <Text style={[{color: colors.darkTextColor}, fonts.plainText]}>Log Out</Text>
-    // </TouchableOpacity>
   ),
     headerRight: (
-      <TouchableOpacity style={{ marginRight: 16 }} onPress={() => navigation.navigate('Settings')}>
-        <Icon name="settings" color={colors.darkTextColor} />
-      </TouchableOpacity>
+      <View />
     ),
   });
 
@@ -44,7 +39,7 @@ class Dashboard extends Component {
 
   renderListHeader = () => {
     return (
-      <TouchableOpacity style={styles.header} >
+      <TouchableOpacity style={styles.header} onPress={() => this.props.navigation.navigate('Create')} >
         <Text style={styles.headerText}>Create new Event</Text>
         <Image
         style={styles.headerAddImage}
@@ -59,7 +54,10 @@ class Dashboard extends Component {
         <FlatList
           data={this.state.data}
           renderItem={({ item }) => (
-            <TouchableOpacity style={item.completed ? styles.listItemCompleted : styles.listItemDefault}>
+            <TouchableOpacity
+              style={item.completed ? styles.listItemCompleted : styles.listItemDefault}
+              onPress={() => this.props.navigation.navigate('Details', {item})}
+            >
               <Text style={styles.listItemText}>{item.title}</Text>
               <Text style={styles.listItemText}>{item.details}</Text>
               <Text style={styles.listItemText}>{item.completed ? 'completed' : null}</Text>

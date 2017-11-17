@@ -26,9 +26,7 @@ class Settings extends Component {
       headerTitle: 'Settings',
       headerTitleStyle: [{ alignSelf: 'center', color: colors.darkTextColor }, fonts.plainText],
       headerLeft: (
-        <TouchableOpacity onPress={() => navigation.goBack()} >
-          <Icon name="keyboard-arrow-left" color={colors.darkTextColor} size={36} />
-      </TouchableOpacity>
+        <View />
     ),
       headerRight: (
         <TouchableOpacity style={{ marginRight: 16 }} onPress={() => params.handleEditSettings()} >

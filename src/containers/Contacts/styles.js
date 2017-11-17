@@ -5,7 +5,7 @@ import fonts from '../../global/fonts';
 export default styles = {
   mainView: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: colors.viewBackgroundColor,
+    alignItems: 'center',
   },
 };
