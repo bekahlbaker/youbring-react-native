@@ -1,37 +1,31 @@
-import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { StackNavigator } from 'react-navigation';
-import Login from './src/containers/Login/index';
+import Login from './src/containers/Login/login';
+import Dashboard from './src/containers/Dashboard/dashboard';
+import reducers from './src/reducers';
+
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types */
 
-const Dashboard = () => (
-  <View
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#67809F',
-    }}
-  >
-    <Text>Dashboard</Text>
-  </View>
+const createStoreWithMiddleWare = applyMiddleware(thunk)(createStore);
+
+const SimpleApp = StackNavigator(
+  {
+    Login: { screen: Login },
+    Dashboard: { screen: Dashboard },
+  },
+  { headerMode: 'screen' },
 );
 
-const RootNavigator = StackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  Dashboard: {
-    screen: Dashboard,
-    navigationOptions: {
-      headerTitle: 'Dashboard',
-    },
-  },
-});
+const App = () => {
+  return (
+    <Provider store={createStoreWithMiddleWare(reducers)}>
+      <SimpleApp />
+    </Provider>
+  );
+};
 
-export default RootNavigator;
+export default App;
