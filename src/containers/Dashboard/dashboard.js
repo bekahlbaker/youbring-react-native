@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, FlatList, ListItem, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
-import YBButton from '../../components/YBButton';
-import YBInput from '../../components/YBInput';
 import styles from './styles';
-import Add from './Add.png';
+import colors from '../../global/colors';
+import fonts from '../../global/fonts';
+
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
 
 class Dashboard extends Component {
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = {
+    gesturesEnabled: false,
     headerTitle: 'Events',
-    headerTitleStyle: [{ alignSelf: 'center', color: colors.darkTextColor }, fonts.plainText],
-    headerLeft: (
-      <View />
-  ),
+    headerTitleStyle: [{ alignSelf: 'center', color: colors.navy }, fonts.regular16],
     headerRight: (
       <View />
     ),
-  });
+  }
 
   constructor(props) {
     super(props);
@@ -41,9 +39,7 @@ class Dashboard extends Component {
     return (
       <TouchableOpacity style={styles.header} onPress={() => this.props.navigation.navigate('Create')} >
         <Text style={styles.headerText}>Create new Event</Text>
-        <Image
-        style={styles.headerAddImage}
-          source={Add}/>
+
       </TouchableOpacity>
     );
   }
