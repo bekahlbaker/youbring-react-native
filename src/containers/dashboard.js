@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, FlatList, ListItem, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
-import styles from './styles';
-import colors from '../../global/colors';
-import fonts from '../../global/fonts';
+
 
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */

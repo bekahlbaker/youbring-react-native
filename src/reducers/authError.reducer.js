@@ -1,11 +1,11 @@
-import { NEW_USER, EMAIL_AUTH } from '../actions/auth.actions';
+import { INCORRECT_PASSWORD, EMAIL_EXISTS } from '../actions/auth.actions';
 
 export default function (state = null, action) {
   switch (action.type) {
     default: return state;
-    case NEW_USER:
+    case INCORRECT_PASSWORD:
       return action.payload;
-    case EMAIL_AUTH:
+    case EMAIL_EXISTS:
       return action.payload;
   }
 }

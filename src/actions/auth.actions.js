@@ -2,6 +2,8 @@
 
 export const NEW_USER = 'NEW_USER';
 export const EMAIL_AUTH = 'EMAIL_AUTH';
+export const INCORRECT_PASSWORD = 'INCORRECT_PASSWORD';
+export const EMAIL_EXISTS = 'EMAIL_EXISTS';
 
 const BASE_URL = 'https://youbring-api.herokuapp.com';
 
@@ -16,7 +18,7 @@ export function newUser(credentials) {
   console.log(credentials);
   return (dispatch) => {
     // post to API with credentials
-    fetch(`${BASE_URL}/auth/new-user`, {
+    return fetch(`${BASE_URL}/auth/new-user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,23 +32,31 @@ export function newUser(credentials) {
     })
       .then(res => res.json())
       .then((user) => {
-        // save user to localStorage
         console.log('USER', user);
-        // dispatch the user
-        dispatch({
-          type: NEW_USER,
-          payload: user,
-        });
+        if (user.success) {
+          // dispatch the user
+          dispatch({
+            type: NEW_USER,
+            payload: user,
+          });
+        } else {
+          // dispatch error
+          console.log('ERROR MESSAGE', user.message);
+          dispatch({
+            type: EMAIL_EXISTS,
+            payload: user.message,
+          });
+        }
       })
       .catch(error => console.log('ERROR', error));
   };
 }
 
 export function emailAuth(credentials) {
-    console.log(credentials);
+  console.log(credentials);
   return (dispatch) => {
     // post to API with credentials
-    fetch(`${BASE_URL}/auth/login`, {
+    return fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,13 +68,20 @@ export function emailAuth(credentials) {
     })
       .then(res => res.json())
       .then((user) => {
-        // save user to localStorage
-
-        // dispatch the user
-        dispatch({
-          type: EMAIL_AUTH,
-          payload: user,
-        });
+        console.log('USER', user);
+        if (user.success) {
+          // dispatch the user
+          dispatch({
+            type: EMAIL_AUTH,
+            payload: user,
+          });
+        } else {
+          // dispatch error
+          dispatch({
+            type: INCORRECT_PASSWORD,
+            payload: user.message,
+          });
+        }
       })
       .catch(error => console.log('ERROR', error));
   };

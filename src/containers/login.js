@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { newUser } from '../../actions/auth.actions';
-import styles from './loginStyles';
+import { newUser } from '../actions/auth.actions';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
 
@@ -35,8 +34,8 @@ class Login extends Component {
     };
     this.props.newUser(credentials);
 
-console.log('USER', this.props.user.message)
-    // this.props.navigation.navigate('Dashboard');
+// console.log('USER', this.props.user.message)
+    this.props.navigation.navigate('Dashboard');
   }
 
   render(){
@@ -52,7 +51,7 @@ console.log('USER', this.props.user.message)
             width: 200,
             padding: 12,
             borderRadius:20,
-            backgroundColor: colors.orange,
+            backgroundColor: 'orange',
             marginTop:20,
             alignItems: 'center',
           }}>
