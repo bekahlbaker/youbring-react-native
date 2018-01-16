@@ -11,6 +11,7 @@ export default styles = {
   // Containers and Views
   container: {
     backgroundColor: colors.white,
+    flex: 1,
   },
   scrollView: {
     alignItems: 'center',

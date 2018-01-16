@@ -37,8 +37,23 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
 
+    Keychain
+      .getGenericPassword()
+      .then((credentials) => {
+        console.log('CREDENTIALS: ', credentials.username);
+        if (credentials) {
+
+        }
+      })
+      .catch((err) => {
+        console.log(`Could not load credentials. ${err}`);
+      });
+
     this.state = {
-      value: {},
+      value: {
+        email: 'bekah@email.com',
+        password: 'password',
+      },
       checked: false,
       emailHasError: false,
       emailError: null,
@@ -72,8 +87,10 @@ class SignIn extends Component {
 
   handleCheckButton() {
     this.setState({ checked: !this.state.checked }, () => {
+      console.log('CHECKED: ', this.state.checked);
       if (this.state.checked) {
-        if (this.state.value.username && this.state.value.password) {
+        console.log(this.state.value.email, this.state.value.password)
+        if (this.state.value.email && this.state.value.password) {
           Keychain
             .setGenericPassword(this.state.value.email, this.state.value.password)
             .then(() => {
@@ -98,7 +115,6 @@ class SignIn extends Component {
   }
 
   handleSignInButton() {
-    console.log('VALUE -> ', this.state.value);
     const value = this.form.getValue();
     if (value) {
       console.log('value: ', value);

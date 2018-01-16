@@ -1,17 +1,38 @@
 import { StackNavigator, TabNavigator } from 'react-navigation';
+// SplashScreen
+import SplashScreen from './containers/splashscreen';
 
 // Stack Navigator
 import SignUp from './containers/signUp';
 import SignIn from './containers/signIn';
 
 // Tab Navigator
-import Home from './containers/dashboard';
+import Dashboard from './containers/dashboard';
+
+import Details from './containers/eventDetails';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types */
 
+const EventsStack = StackNavigator(
+  {
+    Dashboard: {
+      screen: Dashboard,
+    },
+    Details: {
+      screen: Details,
+    },
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    },
+  },
+);
+
 export const SignedIn = TabNavigator({
-  Home: {
-    screen: Home,
+  Dashboard: {
+    screen: EventsStack,
   },
 }, {
   tabBarOptions: {
@@ -47,9 +68,12 @@ export const SignedOut = StackNavigator(
 
 // Creates a StackNavigator with a Tab and Stack
 // and sets initial route based on wether the user is signed in
-export const createRootNavigator = (signedIn = false) => {
+export const createRootNavigator = (initialScreen) => {
   return StackNavigator(
     {
+      SplashScreen: {
+        screen: SplashScreen,
+      },
       SignedIn: {
         screen: SignedIn,
         navigationOptions: {
@@ -66,7 +90,7 @@ export const createRootNavigator = (signedIn = false) => {
     {
       headerMode: 'none',
       mode: 'modal',
-      initialRouteName: signedIn ? 'SignedIn' : 'SignedOut',
+      initialRouteName: initialScreen,
     },
   );
 };

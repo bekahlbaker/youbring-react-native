@@ -1,68 +1,102 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, FlatList, ListItem, Image } from 'react-native';
+import { TouchableOpacity, FlatList, ListItem, Image } from 'react-native';
+import { Content, View, Button, Text, Container } from 'native-base';
 import { Icon } from 'react-native-elements';
-
-
+import { connect } from 'react-redux';
+import { newUser } from '../actions/auth.actions';
+import fonts from '../FONTS';
+import colors from '../COLORS';
+import styles from '../GLOBAL_STYLES';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
 
-class Dashboard extends Component {
+const dashboardStyles = {
+  welcome: [{
+    marginTop: 30,
+    textAlign: 'center',
+  }, fonts.extraBold36],
+  addNewButtonView: {
+    alignSelf: 'flex-end',
+  },
+  addNewButton: {
+    width: 100,
+    backgroundColor: colors.white,
+    justifyContent: 'flex-end',
+    paddingRight: 20,
+  },
+  addNewButtonText: [{
+    color: colors.orange,
+    textAlign: 'right',
+  }, fonts.regular15],
+};
 
-  static navigationOptions = {
-    gesturesEnabled: false,
-    headerTitle: 'Events',
-    headerTitleStyle: [{ alignSelf: 'center', color: colors.navy }, fonts.regular16],
-    headerRight: (
-      <View />
-    ),
-  }
+const eventItemStyles = {
+  container: {
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+    backgroundColor: colors.lightGray,
+  },
+  title: [{
+    color: colors.navy,
+  }, fonts.semiBold15],
+  description: [{
+    color: colors.navy,
+  }, fonts.regular15],
+  date: [{
+    color: colors.navy,
+  }, fonts.regular15],
+};
+
+class Dashboard extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [{ title: 'Thanksgiving at Mammaws', details: '11/22/17 @ 6 pm', completed: false }, { title: 'Thanksgiving at Mimis', details: '11/23/17 @ 6 pm' , completed: false }, { title: 'Thanksgiving at Grandmas', details: '11/15/17 @ 1 pm', completed: true }, { title: 'Work Holiday Party', details: '11/10/17 @ 12:20 pm', completed: true }],
+      events: this.props.user.user.events,
     };
   }
 
-  renderHeader = () => {
-    return (
-      <View>
-
-      </View>
-    );
-  }
-
-  renderListHeader = () => {
-    return (
-      <TouchableOpacity style={styles.header} onPress={() => this.props.navigation.navigate('Create')} >
-        <Text style={styles.headerText}>Create new Event</Text>
-
-      </TouchableOpacity>
-    );
-  }
-
   render() {
+    if (this.props.user) {
+      console.log('USER INFO: ', this.props.user.user);
+      console.log(this.props.user.user.events);
+      return (
+        <Container style={styles.container}>
+          <Text style={dashboardStyles.welcome}>Hello {this.props.user.user.firstName}</Text>
+
+          <View style={dashboardStyles.addNewButtonView}>
+            <Button style={dashboardStyles.addNewButton} onPress={() => this.handleOnPressEditButton}><Text style={dashboardStyles.addNewButtonText}>Edit</Text></Button>
+          </View>
+
+          <FlatList
+            data={this.state.events}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={eventItemStyles.container}
+                onPress={() => this.props.navigation.navigate('Details', { item })}
+              >
+                <Text style={eventItemStyles.title}>{item.name}</Text>
+                <Text style={eventItemStyles.description}>{item.description}</Text>
+                <Text style={eventItemStyles.date}>{item.date}</Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={item => item._id}
+          />
+        </Container>
+      );
+    }
     return (
-      <View style={styles.mainView}>
-        <FlatList
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={item.completed ? styles.listItemCompleted : styles.listItemDefault}
-              onPress={() => this.props.navigation.navigate('Details', {item})}
-            >
-              <Text style={styles.listItemText}>{item.title}</Text>
-              <Text style={styles.listItemText}>{item.details}</Text>
-              <Text style={styles.listItemText}>{item.completed ? 'completed' : null}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.title}
-          ListHeaderComponent={this.renderListHeader}
-        />
-      </View>
+      <Text>Loading</Text>
     );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);

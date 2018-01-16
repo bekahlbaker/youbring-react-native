@@ -4,13 +4,14 @@ import { Content, View, Button, Text, Container } from 'native-base';
 import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
 import * as Keychain from 'react-native-keychain';
+import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
-import { newUser } from '../actions/auth.actions';
+import { newUser, facebookAuth } from '../actions/auth.actions';
 import fonts from '../FONTS';
 import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
 
-/* eslint-disable react/prop-types, react/jsx-filename-extension */
+/* eslint-disable react/prop-types, react/jsx-filename-extension, class-methods-use-this */
 
 const signUpStyles = {
   logo: {
@@ -82,11 +83,26 @@ class SignUp extends Component {
   }
 
   handleSignUpWithFacebookButton() {
-
+    // Attempt a login using the Facebook login dialog asking for default permissions.
+    LoginManager.logInWithReadPermissions(['public_profile']).then(
+      (result) => {
+        if (result.isCancelled) {
+          console.log('Login with facebook was cancelled');
+        } else {
+          AccessToken.getCurrentAccessToken().then((data) => {
+            console.log('DATA ', data);
+            console.log('ACCESS TOKEN ', data.accessToken);
+            this.props.facebookAuth(data.accessToken);
+          });
+        }
+      },
+      (error) => {
+        console.log(`Login fail with error: ${error}`);
+      },
+    );
   }
 
   handleSignUpButton() {
-    console.log('VALUE -> ', this.state.value);
     const value = this.form.getValue();
     if (value) {
       console.log('value: ', value);
@@ -190,4 +206,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { newUser })(SignUp);
+export default connect(mapStateToProps, { newUser, facebookAuth })(SignUp);
