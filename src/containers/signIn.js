@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Content, View, Button, Text, Container } from 'native-base';
 import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
@@ -37,21 +37,9 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
 
-    Keychain
-      .getGenericPassword()
-      .then((credentials) => {
-        console.log('CREDENTIALS: ', credentials.username);
-        if (credentials) {
-
-        }
-      })
-      .catch((err) => {
-        console.log(`Could not load credentials. ${err}`);
-      });
-
     this.state = {
       value: {
-        email: 'bekah@email.com',
+        email: 'email@email.com',
         password: 'password',
       },
       checked: false,
@@ -87,9 +75,7 @@ class SignIn extends Component {
 
   handleCheckButton() {
     this.setState({ checked: !this.state.checked }, () => {
-      console.log('CHECKED: ', this.state.checked);
       if (this.state.checked) {
-        console.log(this.state.value.email, this.state.value.password)
         if (this.state.value.email && this.state.value.password) {
           Keychain
             .setGenericPassword(this.state.value.email, this.state.value.password)

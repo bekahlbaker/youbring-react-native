@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Content, View, Button, Text, Container } from 'native-base';
-import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
-import * as Keychain from 'react-native-keychain';
-import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
 import { newUser, facebookAuth } from '../actions/auth.actions';
-import fonts from '../FONTS';
-import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension, class-methods-use-this */

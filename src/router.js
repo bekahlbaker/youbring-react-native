@@ -5,6 +5,7 @@ import SplashScreen from './containers/splashscreen';
 // Stack Navigator
 import SignUp from './containers/signUp';
 import SignIn from './containers/signIn';
+import LoggingIn from './containers/loggingIn';
 
 // Tab Navigator
 import Dashboard from './containers/dashboard';
@@ -23,10 +24,6 @@ const EventsStack = StackNavigator(
     },
   },
   {
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false,
-    },
   },
 );
 
@@ -73,6 +70,9 @@ export const createRootNavigator = (initialScreen) => {
     {
       SplashScreen: {
         screen: SplashScreen,
+      },
+      LoggingIn: {
+        screen: LoggingIn,
       },
       SignedIn: {
         screen: SignedIn,

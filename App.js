@@ -4,7 +4,6 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import * as Keychain from 'react-native-keychain';
 import reducers from './src/reducers';
-import SplashScreen from './src/containers/splashscreen';
 import { createRootNavigator } from './src/router';
 
 
@@ -54,16 +53,11 @@ class App extends Component {
         console.log('CREDENTIALS: ', credentials.username);
         if (credentials) {
           // call login action here and navigate to Home if successful login
-
-          console.log('Credentials are stored, go to Sign In Screen');
+          console.log('User is signed in, attempt to Login');
+          // Attempt Login
           setTimeout(() => {
-            this.setState({ signedIn: false }, () => console.log('SIGNED IN: ', this.state.signedIn));
-          }, 2000);
-
-          // console.log('User is signed in, go to Home screen');
-          // setTimeout(() => {
-          //   this.setState({ signedIn: true }, () => console.log('SIGNED IN: ', this.state.signedIn));
-          // }, 2000);
+            this.setState({ signedIn: true }, () => console.log('SIGNED IN: ', this.state.signedIn));
+          }, 1000);
         } else {
           console.log('User is not signed in, go to Sign In screen');
           setTimeout(() => {
@@ -83,7 +77,7 @@ class App extends Component {
     if (this.state.signedIn === null) {
       initialScreen = 'SplashScreen';
     } else if (this.state.signedIn === true) {
-      initialScreen = 'SignedIn';
+      initialScreen = 'LoggingIn';
     } else if (this.state.signedIn === false) {
       initialScreen = 'SignedOut';
     }

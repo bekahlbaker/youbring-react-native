@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, FlatList, ListItem, Image } from 'react-native';
-import { Content, View, Button, Text, Container } from 'native-base';
-import { Icon } from 'react-native-elements';
+import { TouchableOpacity, FlatList } from 'react-native';
+import { View, Button, Text, Container } from 'native-base';
 import { connect } from 'react-redux';
-import { newUser } from '../actions/auth.actions';
 import fonts from '../FONTS';
 import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
@@ -61,7 +59,6 @@ class Dashboard extends Component {
   render() {
     if (this.props.user) {
       console.log('USER INFO: ', this.props.user.user);
-      console.log(this.props.user.user.events);
       return (
         <Container style={styles.container}>
           <Text style={dashboardStyles.welcome}>Hello {this.props.user.user.firstName}</Text>
@@ -82,7 +79,7 @@ class Dashboard extends Component {
                 <Text style={eventItemStyles.date}>{item.date}</Text>
               </TouchableOpacity>
             )}
-            keyExtractor={item => item._id}
+            keyExtractor={item => item.id}
           />
         </Container>
       );

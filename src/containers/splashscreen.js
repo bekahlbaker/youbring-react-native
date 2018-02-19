@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { Image, AsyncStorage } from 'react-native';
-import { Content, View, Button, Text, Container } from 'native-base';
+import React from 'react';
+import { Text, Container } from 'native-base';
 import fonts from '../FONTS';
 import colors from '../COLORS';
-import styles from '../GLOBAL_STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 
