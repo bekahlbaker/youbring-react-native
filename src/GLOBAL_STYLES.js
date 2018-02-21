@@ -51,6 +51,10 @@ export default styles = {
     color: colors.lightBlue,
     textDecorationLine: 'underline',
   }, fonts.regular15],
+  rightBarButtonText: [{
+    color: colors.white,
+    paddingRight: 16,
+  }, fonts.Regular17],
   // Form Styles
   formStyles: {
     ...t.form.Form.stylesheet,
