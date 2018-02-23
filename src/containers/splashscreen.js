@@ -66,7 +66,7 @@ class SplashScreen extends Component {
     return (
       <Container style={splashScreenStyles.splashscreenContainer}>
         <Text style={splashScreenStyles.welcomeText}>
-        Welcome to YouBring!
+        YouBring
         </Text>
       </Container>
     );

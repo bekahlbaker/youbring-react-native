@@ -7,6 +7,7 @@ import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { newEvent } from '../actions/event.actions';
+import NewItemModal from './newItemModal';
 import fonts from '../FONTS';
 import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
@@ -20,6 +21,8 @@ class AddEvent extends Component {
     this.state = {
       value: {},
       isNew: true,
+      checked: false,
+      isNewItemModalVisible: false,
     };
 
     this.myFormatFunction = (format, date) => moment(date).format(format);
@@ -28,6 +31,10 @@ class AddEvent extends Component {
       name: t.String,
       date: t.Date,
     });
+
+    this.handleSaveEvent = this.handleSaveEvent.bind(this);
+    this.handleCheckButton = this.handleCheckButton.bind(this);
+    this.handleNewItemModal = this.handleNewItemModal.bind(this);
   }
 
   componentWillMount() {
@@ -66,6 +73,26 @@ class AddEvent extends Component {
     }
   }
 
+  handleCheckButton() {
+    this.setState({ checked: !this.state.checked });
+  }
+
+  handleNewItemModal() {
+    this.setState({ isNewItemModalVisible: !this.state.isNewItemModalVisible });
+  }
+
+  renderNewItemModal() {
+    if (this.state.isNewItemModalVisible) {
+      return (
+        <NewItemModal
+          isNewItemModalVisible={this.state.isNewItemModalVisible}
+          handleClose={this.handleNewItemModal}
+        />
+      );
+    }
+    return null;
+  }
+
   render() {
     const formOptions = {
       fields: {
@@ -83,6 +110,7 @@ class AddEvent extends Component {
     };
     return (
       <Container style={styles.container} >
+        {this.renderNewItemModal()}
         <Content
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
@@ -97,6 +125,22 @@ class AddEvent extends Component {
               onChange={value => this.onChange(value)}
             />
           </View>
+
+          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+            <CheckBox
+              title="User can create own items for event."
+              checked={this.state.checked}
+              containerStyle={styles.checkBox}
+              textStyle={styles.gray13Text}
+              onPress={() => this.handleCheckButton()}
+              size={24}
+              checkedColor={colors.orange}
+            />
+          </View>
+
+          <TouchableOpacity style={{ marginTop: 30, width: 300, height: 45 }} onPress={() => this.handleNewItemModal()}>
+            <Text style={styles.buttonTextOnly}>Add Item</Text>
+          </TouchableOpacity>
 
           <Button style={[styles.orangeButton, { marginTop: 50 }]} onPress={() => this.handleSaveEvent()}>
             <Text style={styles.orangeButtonText}>Save Event</Text>
