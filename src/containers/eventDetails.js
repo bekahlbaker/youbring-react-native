@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Image, AsyncStorage } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Content, View, Button, Text, Container } from 'native-base';
+import moment from 'moment';
 import fonts from '../FONTS';
 import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
+
+let event = {};
 
 const eventDetailsStyles = {
   editButtonView: {
@@ -30,38 +33,36 @@ const eventDetailsStyles = {
   }, fonts.regular15],
 };
 
-class EventDetails extends Component {
-  constructor(props) {
-    super(props);
+export const EventDetails = ({ navigation }) => {
+  event = navigation.state.params.item;
+  console.log('Event passed ', event);
+  return (
+    <Container style={styles.container} >
+      <Content
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollView}
+      >
+        <Text style={eventDetailsStyles.title}>
+          {event.name}
+        </Text>
 
-  }
+        <Text style={eventDetailsStyles.description}>{moment(event.date).format('MMM DD YYYY, h:mm a')}</Text>
 
-  render() {
-    const event = this.props.navigation.state.params.item;
-    console.log('Event passed ', event);
-    return (
-      <Container style={styles.container} >
-        <Content
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollView}
-        >
+        <Text style={eventDetailsStyles.description}>
+          {event.description}
+        </Text>
 
-          <View style={eventDetailsStyles.editButtonView}>
-            <Button style={eventDetailsStyles.editButton} onPress={() => this.props.navigation.navigate('AddEvent', { event })}><Text style={eventDetailsStyles.editButtonText}>Edit</Text></Button>
-          </View>
+      </Content>
+    </Container>
+  );
+};
 
-          <Text style={eventDetailsStyles.title}>
-            {event.name}
-          </Text>
-
-          <Text style={eventDetailsStyles.description}>
-            {event.description}
-          </Text>
-
-        </Content>
-      </Container>
-    );
-  }
-}
+EventDetails.navigationOptions = ({ navigation }) => ({
+  headerRight: (
+    <TouchableOpacity onPress={() => navigation.navigate('AddEvent', { event })}>
+      <Text style={styles.rightBarButtonText}>Edit</Text>
+    </TouchableOpacity>
+  ),
+});
 
 export default EventDetails;

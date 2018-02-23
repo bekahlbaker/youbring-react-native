@@ -6,7 +6,7 @@ import t from 'tcomb-form-native';
 import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { emailAuth } from '../actions/auth.actions';
+import { newEvent } from '../actions/event.actions';
 import fonts from '../FONTS';
 import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
@@ -19,6 +19,7 @@ class AddEvent extends Component {
 
     this.state = {
       value: {},
+      isNew: true,
     };
 
     this.myFormatFunction = (format, date) => moment(date).format(format);
@@ -29,10 +30,6 @@ class AddEvent extends Component {
     });
   }
 
-  onChange(value) {
-    this.setState({ value });
-  }
-
   componentWillMount() {
     if (this.props.navigation.state.params) {
       console.log('Params ', this.props.navigation.state.params);
@@ -41,8 +38,18 @@ class AddEvent extends Component {
         name: event.name,
         date: new Date(event.date),
       };
-      this.setState({ value });
+      this.setState({ value, isNew: false });
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.createdEvent) {
+      console.log('Event was created ', nextProps.createdEvent);
+    }
+  }
+
+  onChange(value) {
+    this.setState({ value });
   }
 
   handleSaveEvent() {
@@ -51,6 +58,11 @@ class AddEvent extends Component {
       const date = moment(value.date).format();
       console.log('date', date);
       console.log('value: ', value);
+      const createdValue = {
+        name: value.name,
+        date,
+      };
+      this.props.newEvent(createdValue);
     }
   }
 
@@ -75,7 +87,7 @@ class AddEvent extends Component {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
         >
-          <Text style={styles.logoText}>Add a new event</Text>
+          <Text style={styles.logoText}>{this.state.isNew ? 'Add a new event' : 'Update event'}</Text>
           <View style={styles.view}>
             <t.form.Form
               ref={c => this.form = c}
@@ -96,4 +108,10 @@ class AddEvent extends Component {
   }
 }
 
-export default AddEvent;
+const mapStateToProps = (state) => {
+  return {
+    event: state.createdEvent,
+  };
+};
+
+export default connect(mapStateToProps, { newEvent })(AddEvent);

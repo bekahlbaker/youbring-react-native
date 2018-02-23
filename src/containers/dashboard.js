@@ -4,6 +4,7 @@ import { View, Button, Text, Container } from 'native-base';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 import fonts from '../FONTS';
 import colors from '../COLORS';
 import styles from '../GLOBAL_STYLES';
@@ -96,7 +97,7 @@ class Dashboard extends Component {
               >
                 <Text style={eventItemStyles.title}>{item.name}</Text>
                 <Text style={eventItemStyles.description}>{item.description}</Text>
-                <Text style={eventItemStyles.date}>{item.date}</Text>
+                <Text style={eventItemStyles.date}>{moment(item.date).format('MMM DD YYYY, h:mm a')}</Text>
               </TouchableOpacity>
             )}
             keyExtractor={item => item.id}
