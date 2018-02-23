@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, AsyncStorage } from 'react-native';
 import { Content, View, Button, Text, Container } from 'native-base';
 import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
@@ -101,6 +101,7 @@ class SignIn extends Component {
   }
 
   handleSignInButton() {
+    AsyncStorage.setItem('UserIsSignedIn', 'true');
     const value = this.form.getValue();
     if (value) {
       console.log('value: ', value);

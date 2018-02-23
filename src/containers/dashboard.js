@@ -121,8 +121,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (this.props.user) {
-      console.log('USER INFO: ', this.props.user.user);
+    console.log('USER INFO: ', this.props.user.user.events);
+    if (this.props.user.user.events) {
       return (
         <Container style={styles.container}>
           <StatusBar

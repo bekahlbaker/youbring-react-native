@@ -58,7 +58,7 @@ export function emailAuth(credentials) {
   console.log(credentials);
   return (dispatch) => {
     // post to API with credentials
-    return fetch(`${BASE_URL}/auth/login`, {
+    return fetch(`${BASE_URL}/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

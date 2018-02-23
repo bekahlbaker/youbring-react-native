@@ -8,7 +8,6 @@ import SplashScreen from './containers/splashscreen';
 // Stack Navigator
 import SignUp from './containers/signUp';
 import SignIn from './containers/signIn';
-import LoggingIn from './containers/loggingIn';
 
 // Tab Navigator
 import Dashboard from './containers/dashboard';
@@ -83,34 +82,27 @@ export const SignedOut = StackNavigator(
   },
 );
 
-// Creates a StackNavigator with a Tab and Stack
-// and sets initial route based on wether the user is signed in
-export const createRootNavigator = (initialScreen) => {
-  return StackNavigator(
-    {
-      SplashScreen: {
-        screen: SplashScreen,
-      },
-      LoggingIn: {
-        screen: LoggingIn,
-      },
-      SignedIn: {
-        screen: SignedIn,
-        navigationOptions: {
-          gesturesEnabled: false,
-        },
-      },
-      SignedOut: {
-        screen: SignedOut,
-        navigationOptions: {
-          gesturesEnabled: false,
-        },
+// Main Navigator that contains all main stacks
+export const MainNavigator = StackNavigator(
+  {
+    SplashScreen: {
+      screen: SplashScreen,
+    },
+    SignedIn: {
+      screen: SignedIn,
+      navigationOptions: {
+        gesturesEnabled: false,
       },
     },
-    {
-      headerMode: 'none',
-      mode: 'modal',
-      initialRouteName: initialScreen,
+    SignedOut: {
+      screen: SignedOut,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
     },
-  );
-};
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+  },
+);
