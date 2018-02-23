@@ -13,6 +13,7 @@
 		"jest-cli": "^22.0.4",
 		"jest-fetch-mock": "^1.4.0",
 		"jest-serializer-enzyme": "^1.0.0",
+		"moment": "^2.20.1",
 		"native-base": "^2.3.3",
 		"prop-types": "15.6.0",
 		"react": "16.0.0",

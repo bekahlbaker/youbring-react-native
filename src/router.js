@@ -11,7 +11,7 @@ import SignIn from './containers/signIn';
 
 // Tab Navigator
 import Dashboard from './containers/dashboard';
-
+import AddEvent from './containers/addEvent';
 import Details from './containers/eventDetails';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types */
@@ -27,6 +27,9 @@ const EventsStack = StackNavigator({
   },
   Details: {
     screen: Details,
+  },
+  AddEvent: {
+    screen: AddEvent,
   },
 }, {
   navigationOptions: {

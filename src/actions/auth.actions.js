@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 /* eslint-disable import/prefer-default-export */
 
 export const NEW_USER = 'NEW_USER';
@@ -20,7 +21,7 @@ export function newUser(credentials) {
   console.log(credentials);
   return (dispatch) => {
     // post to API with credentials
-    return fetch(`${BASE_URL}/auth/new-user`, {
+    return fetch(`${BASE_URL}/user/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,6 +37,7 @@ export function newUser(credentials) {
       .then((user) => {
         console.log('USER', user);
         if (user.success) {
+          AsyncStorage.setItem('Token', user.token);
           // dispatch the user
           dispatch({
             type: NEW_USER,
@@ -72,6 +74,7 @@ export function emailAuth(credentials) {
       .then((user) => {
         console.log('USER', user);
         if (user.success) {
+          AsyncStorage.setItem('Token', user.token);
           // dispatch the user
           dispatch({
             type: EMAIL_AUTH,
@@ -93,19 +96,17 @@ export function facebookAuth(token) {
   console.log(token);
   return (dispatch) => {
     // post to API with credentials
-    return fetch(`${BASE_URL}/auth/login`, {
+    return fetch(`${BASE_URL}/auth/facebook?access_token=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        accessToken: token,
-      }),
     })
       .then(res => res.json())
       .then((user) => {
         console.log('USER', user);
         if (user.success) {
+          AsyncStorage.setItem('Token', user.token);
           // dispatch the user
           dispatch({
             type: FACEBOOK_AUTH,

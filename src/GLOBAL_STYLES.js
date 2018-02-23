@@ -101,6 +101,26 @@ export default styles = {
         paddingLeft: 8,
       }, fonts.regular15],
     },
+    dateTouchable: {
+      normal: {
+        borderColor: colors.lightGray,
+        borderBottomWidth: 1,
+      },
+      error: {
+        borderColor: colors.error,
+        borderBottomWidth: 1,
+      },
+    },
+    dateValue: {
+      normal: [{
+        color: colors.mediumGray,
+        paddingLeft: 8,
+      }, fonts.Regular15],
+      error: [{
+        color: colors.error,
+        paddingLeft: 8,
+      }, fonts.Regular15],
+    },
     errorBlock: [{
       marginBottom: 2,
       color: colors.error,

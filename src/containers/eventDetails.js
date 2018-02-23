@@ -34,17 +34,11 @@ class EventDetails extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isEditing: false,
-    };
-  }
-
-  handleOnPressEditButton() {
-    this.setState({ isEditing: !this.state.isEditing });
   }
 
   render() {
     const event = this.props.navigation.state.params.item;
+    console.log('Event passed ', event);
     return (
       <Container style={styles.container} >
         <Content
@@ -53,7 +47,7 @@ class EventDetails extends Component {
         >
 
           <View style={eventDetailsStyles.editButtonView}>
-            <Button style={eventDetailsStyles.editButton} onPress={() => this.handleOnPressEditButton}><Text style={eventDetailsStyles.editButtonText}>Edit</Text></Button>
+            <Button style={eventDetailsStyles.editButton} onPress={() => this.props.navigation.navigate('AddEvent', { event })}><Text style={eventDetailsStyles.editButtonText}>Edit</Text></Button>
           </View>
 
           <Text style={eventDetailsStyles.title}>

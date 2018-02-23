@@ -49,74 +49,33 @@ const eventItemStyles = {
 };
 
 class Dashboard extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       // events: this.props.user.user.events,
       events: [
-            {
-            "id": 1,
-            "name": "Quisque class consequat.",
-            "description": "Lorem ipsum netus diam dictum mollis tellus dolor purus semper mattis fames.Consequat, et sodales ultrices consequat natoque justo egestas faucibus eros cum.",
-            "date": "1960-07-21"
-         },
-            {
-            "id": 2,
-            "name": "Hac metus diam!",
-            "description": "Lorem ipsum curabitur nec potenti aliquet suscipit dictumst id libero himenaeos varius aliquet dolor?Gravida ullamcorper habitasse dictumst ut ipsum bibendum imperdiet sit integer venenatis ante.",
-            "date": "1933-12-12"
-         },
-            {
-            "id": 3,
-            "name": "Facilisi potenti odio.",
-            "description": "Lorem ipsum velit nam et lobortis quam amet libero risus natoque.Metus et mattis, scelerisque pellentesque ipsum cum iaculis hendrerit vel.",
-            "date": "1930-05-14"
-         },
-            {
-            "id": 4,
-            "name": "Ultrices, hendrerit inceptos!",
-            "description": "Lorem ipsum penatibus feugiat vivamus inceptos hac urna senectus cum viverra placerat mus quis.Sodales mus habitasse odio, proin aliquet non fermentum volutpat.",
-            "date": "1913-01-08"
-         },
-            {
-            "id": 5,
-            "name": "Ac fames suscipit.",
-            "description": "Lorem ipsum egestas sagittis torquent ante taciti natoque tellus nec elit dui!Neque dictum bibendum cursus sociosqu eros convallis tempus lorem vitae dapibus.",
-            "date": "2010-08-20"
-         },
-            {
-            "id": 6,
-            "name": "Urna, luctus gravida.",
-            "description": "Lorem ipsum mus quis mauris neque, in suspendisse ante conubia!Facilisi pharetra nascetur vivamus class egestas aliquam laoreet libero.",
-            "date": "1903-04-15"
-         },
-            {
-            "id": 7,
-            "name": "Commodo aptent arcu.",
-            "description": "Lorem ipsum sociosqu dictum ad tristique cursus class ornare porttitor ullamcorper conubia!Sagittis gravida blandit porta praesent orci egestas ipsum a.",
-            "date": "1962-08-08"
-         },
-            {
-            "id": 8,
-            "name": "Tincidunt gravida est.",
-            "description": "Lorem ipsum augue elementum auctor vulputate porta mattis posuere sodales fames.Habitasse massa; dui nibh tortor suscipit urna mollis diam ultricies ipsum.",
-            "date": "1988-08-24"
-         },
-            {
-            "id": 9,
-            "name": "Senectus cum donec?",
-            "description": "Lorem ipsum turpis feugiat dis praesent penatibus conubia litora lacinia.Pharetra praesent pellentesque malesuada donec curae; porta libero non.",
-            "date": "1942-11-21"
-         },
-            {
-            "id": 10,
-            "name": "Congue ante auctor.",
-            "description": "Lorem ipsum placerat lorem facilisis lacinia eget fusce euismod habitant.Neque quisque volutpat lobortis mi natoque nisi tincidunt accumsan lacus!",
-            "date": "1953-09-07"
-         }
-      ]
+        {
+          "id": "031397bf-05c5-448c-98c5-cb7d7c70c69a",
+          "name": "Risus eros mi?",
+          "date": "2018-02-23T14:00:27-06:00"
+       },
+          {
+          "id": "7af61889-281a-4eae-9d95-ff134fb3a684",
+          "name": "Tellus ornare pharetra.",
+          "date": "1976-07-10T08:39:20"
+       },
+          {
+          "id": "9ebadfbc-1afd-4c0f-93e3-24f3bb8c796d",
+          "name": "Potenti adipiscing adipiscing.",
+          "date": "1941-03-19T02:13:48"
+       },
+          {
+          "id": "48b1d859-7b67-4364-b3f0-ccc4ebd03d7b",
+          "name": "Curae; ligula, laoreet.",
+          "date": "1909-11-30T02:49:09"
+       },
+      ],
     };
   }
 
@@ -151,9 +110,9 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.navigationOptions = ({ navigation })=> ({
+Dashboard.navigationOptions = ({ navigation }) => ({
   headerRight: (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('AddEvent')}>
       <Text style={styles.rightBarButtonText}>Add</Text>
     </TouchableOpacity>
   ),
