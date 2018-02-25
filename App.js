@@ -30,6 +30,7 @@ class App extends Component {
   */
   componentWillMount() {
     AsyncStorage.removeItem('UserIsSignedIn');
+    AsyncStorage.removeItem('Token');
     // Keychain
     //   .resetGenericPassword()
     //   .then(() => {

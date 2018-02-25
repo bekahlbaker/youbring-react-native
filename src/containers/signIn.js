@@ -39,7 +39,7 @@ class SignIn extends Component {
 
     this.state = {
       value: {
-        email: 'email@email.com',
+        email: 'bekah@gmail.com',
         password: 'password',
       },
       checked: false,
@@ -56,17 +56,23 @@ class SignIn extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user) {
-      this.props.navigation.navigate('SignedIn');
-    }
+    // AsyncStorage.getItem('UserIsSignedIn')
+    //   .then((value) => {
+    //     console.log(value);
+    //     if (value === null) {
+          if (nextProps.user) {
+            this.props.navigation.navigate('SignedIn');
+          }
 
-    if (nextProps.authError) {
-      if (nextProps.authError === 'User not found!') {
-        this.setState({ emailHasError: true, emailError: 'User not found. Do you need to create an account?' });
-      } else if (nextProps.authError === 'Incorrect password') {
-        this.setState({ passwordHasError: true, passwordError: 'Did you forget your password?' });
-      }
-    }
+          if (nextProps.authError) {
+            if (nextProps.authError === 'User not found!') {
+              this.setState({ emailHasError: true, emailError: 'User not found. Do you need to create an account?' });
+            } else if (nextProps.authError === 'Incorrect password') {
+              this.setState({ passwordHasError: true, passwordError: 'Did you forget your password?' });
+            }
+          }
+      //   }
+      // });
   }
 
   onChange(value) {
@@ -101,7 +107,7 @@ class SignIn extends Component {
   }
 
   handleSignInButton() {
-    AsyncStorage.setItem('UserIsSignedIn', 'true');
+    AsyncStorage.setItem('UserSignedIn', 'true');
     const value = this.form.getValue();
     if (value) {
       console.log('value: ', value);

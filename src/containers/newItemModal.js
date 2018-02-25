@@ -19,12 +19,13 @@ class NewItemModal extends Component {
     return (
       <Modal
         isVisible={this.props.isNewItemModalVisible}
-        style={{ backgroundColor: colors.white }}
+        style={{ backgroundColor: 'transparent' }}
       >
-        <Text>Create New item</Text>
-        <TouchableOpacity onPress={() => this.props.handleClose()}>
-          <Text>Close</Text>
-        </TouchableOpacity>
+        <View style={{ backgroundColor: colors.white, borderRadius: 10, height: 200 }}>
+          <TouchableOpacity onPress={() => this.props.handleClose()}>
+            <Text style={{ padding: 8 }}>Close</Text>
+          </TouchableOpacity>
+        </View>
       </Modal>
     );
   }

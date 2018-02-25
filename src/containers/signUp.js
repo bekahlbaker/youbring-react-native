@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, AsyncStorage } from 'react-native';
 import { Content, View, Button, Text, Container } from 'native-base';
 import t from 'tcomb-form-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
@@ -61,13 +61,19 @@ class SignUp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user) {
-      this.props.navigation.navigate('SignedIn');
-    }
+    AsyncStorage.getItem('UserIsSignedIn')
+      .then((value) => {
+        console.log(value);
+        if (value === null) {
+          if (nextProps.user) {
+            this.props.navigation.navigate('SignedIn');
+          }
 
-    if (nextProps.authError) {
-      this.setState({ emailHasError: true, emailError: nextProps.authError });
-    }
+          if (nextProps.authError) {
+            this.setState({ emailHasError: true, emailError: nextProps.authError });
+          }
+        }
+      });
   }
 
   onChange(value) {
@@ -80,12 +86,14 @@ class SignUp extends Component {
 
   handleSignUpWithFacebookButton() {
     // Attempt a login using the Facebook login dialog asking for default permissions.
+
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       (result) => {
         if (result.isCancelled) {
           console.log('Login with facebook was cancelled');
         } else {
           AccessToken.getCurrentAccessToken().then((data) => {
+            AsyncStorage.setItem('UserIsSignedIn', 'true');
             console.log('DATA ', data);
             console.log('ACCESS TOKEN ', data.accessToken);
             this.props.facebookAuth(data.accessToken);
@@ -99,6 +107,7 @@ class SignUp extends Component {
   }
 
   handleSignUpButton() {
+    AsyncStorage.setItem('UserIsSignedIn', 'true');
     const value = this.form.getValue();
     if (value) {
       console.log('value: ', value);

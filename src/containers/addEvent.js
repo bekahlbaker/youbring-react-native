@@ -6,7 +6,7 @@ import t from 'tcomb-form-native';
 import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { newEvent } from '../actions/event.actions';
+import { newEvent, updateEvent } from '../actions/event.actions';
 import NewItemModal from './newItemModal';
 import fonts from '../FONTS';
 import colors from '../COLORS';
@@ -23,6 +23,7 @@ class AddEvent extends Component {
       isNew: true,
       checked: false,
       isNewItemModalVisible: false,
+      eventId: 0,
     };
 
     this.myFormatFunction = (format, date) => moment(date).format(format);
@@ -30,6 +31,7 @@ class AddEvent extends Component {
     this.Event = t.struct({
       name: t.String,
       date: t.Date,
+      description: t.String,
     });
 
     this.handleSaveEvent = this.handleSaveEvent.bind(this);
@@ -44,8 +46,9 @@ class AddEvent extends Component {
       const value = {
         name: event.name,
         date: new Date(event.date),
+        description: event.description,
       };
-      this.setState({ value, isNew: false });
+      this.setState({ value, isNew: false, eventId: event._id });
     }
   }
 
@@ -68,8 +71,17 @@ class AddEvent extends Component {
       const createdValue = {
         name: value.name,
         date,
+        description: value.description,
       };
-      this.props.newEvent(createdValue);
+      AsyncStorage.getItem('Token')
+        .then((token) => {
+          console.log('SAVED TOKEN ', token);
+          if (this.state.isNew) {
+            this.props.newEvent(createdValue, token);
+          } else {
+            this.props.updateEvent(createdValue, token, this.state.eventId);
+          }
+        });
     }
   }
 
@@ -158,4 +170,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { newEvent })(AddEvent);
+export default connect(mapStateToProps, { newEvent, updateEvent })(AddEvent);

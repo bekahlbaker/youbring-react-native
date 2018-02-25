@@ -54,29 +54,7 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      // events: this.props.user.user.events,
-      events: [
-        {
-          "id": "031397bf-05c5-448c-98c5-cb7d7c70c69a",
-          "name": "Risus eros mi?",
-          "date": "2018-02-23T14:00:27-06:00"
-       },
-          {
-          "id": "7af61889-281a-4eae-9d95-ff134fb3a684",
-          "name": "Tellus ornare pharetra.",
-          "date": "1976-07-10T08:39:20"
-       },
-          {
-          "id": "9ebadfbc-1afd-4c0f-93e3-24f3bb8c796d",
-          "name": "Potenti adipiscing adipiscing.",
-          "date": "1941-03-19T02:13:48"
-       },
-          {
-          "id": "48b1d859-7b67-4364-b3f0-ccc4ebd03d7b",
-          "name": "Curae; ligula, laoreet.",
-          "date": "1909-11-30T02:49:09"
-       },
-      ],
+      events: this.props.user.user.events,
     };
   }
 
@@ -100,7 +78,7 @@ class Dashboard extends Component {
                 <Text style={eventItemStyles.date}>{moment(item.date).format('MMM DD YYYY, h:mm a')}</Text>
               </TouchableOpacity>
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item._id}
           />
         </Container>
       );
