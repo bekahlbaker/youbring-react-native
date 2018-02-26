@@ -153,4 +153,7 @@ export default styles = {
   logoText: [{
     color: colors.navy,
   }, fonts.extraBold36],
+  headerText: [{
+    color: colors.white,
+  }, fonts.semiBold19],
 };

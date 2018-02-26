@@ -11,6 +11,10 @@ export default fonts = {
     fontFamily: 'Barlow-SemiBold',
     fontSize: 15,
   },
+  semiBold19: {
+    fontFamily: 'Barlow-SemiBold',
+    fontSize: 19,
+  },
   regular15: {
     fontFamily: 'Barlow-Regular',
     fontSize: 16,

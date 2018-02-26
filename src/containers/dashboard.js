@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, FlatList, StatusBar } from 'react-native';
-import { View, Button, Text, Container } from 'native-base';
+import { View, Button, Text, Container, Header, Left, Right, Body, Title, Subtitle } from 'native-base';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -70,6 +70,20 @@ class Dashboard extends Component {
     if (this.props.user.user.events) {
       return (
         <Container style={styles.container}>
+          <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
+            <Left style={{ flex: 1 }} />
+            <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <Title style={styles.headerText}>
+                Home
+              </Title>
+            </Body>
+            <Right style={{ flex: 1 }}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEvent')}>
+                <Text style={styles.rightBarButtonText}>Add</Text>
+              </TouchableOpacity>
+            </Right>
+
+          </Header>
           <StatusBar
             barStyle="light-content"
           />
@@ -95,14 +109,6 @@ class Dashboard extends Component {
     );
   }
 }
-
-Dashboard.navigationOptions = ({ navigation }) => ({
-  headerRight: (
-    <TouchableOpacity onPress={() => navigation.navigate('AddEvent')}>
-      <Text style={styles.rightBarButtonText}>Add</Text>
-    </TouchableOpacity>
-  ),
-});
 
 const mapStateToProps = (state) => {
   return {

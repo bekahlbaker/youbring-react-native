@@ -20,7 +20,6 @@ const EventsStack = StackNavigator({
   Dashboard: {
     screen: Dashboard,
     navigationOptions: {
-      headerTitle: 'Home',
       gesturesEnabled: false,
       headerBackTitle: null,
     },
@@ -32,11 +31,9 @@ const EventsStack = StackNavigator({
     screen: AddEvent,
   },
 }, {
+  headerMode: 'none',
   navigationOptions: {
-    headerTintColor: '#FFFFFF',
-    headerStyle: {
-      backgroundColor: '#22313F',
-    },
+    headerVisible: false,
   },
 });
 

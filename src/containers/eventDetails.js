@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Content, View, Button, Text, Container } from 'native-base';
+import { Content, View, Button, Text, Container, Header, Left, Right, Body, Title, Icon } from 'native-base';
 import moment from 'moment';
 import fonts from '../FONTS';
 import colors from '../COLORS';
@@ -35,9 +35,27 @@ const eventDetailsStyles = {
 
 export const EventDetails = ({ navigation }) => {
   event = navigation.state.params.item;
-  console.log('Event passed ', event);
   return (
     <Container style={styles.container} >
+      <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
+        <Left style={{ flex: 1 }}>
+
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon style={{ color: colors.white }} name="arrow-back" />
+          </Button>
+
+        </Left>
+        <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Title style={styles.headerText}>
+            Event
+          </Title>
+        </Body>
+        <Right style={{ flex: 1 }}>
+          <TouchableOpacity onPress={() => navigation.navigate('AddEvent', { event })}>
+            <Text style={styles.rightBarButtonText}>Edit</Text>
+          </TouchableOpacity>
+        </Right>
+      </Header>
       <Content
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollView}
