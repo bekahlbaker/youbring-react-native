@@ -61,19 +61,14 @@ class SignUp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    AsyncStorage.getItem('UserIsSignedIn')
-      .then((value) => {
-        console.log(value);
-        if (value === null) {
-          if (nextProps.user) {
-            this.props.navigation.navigate('SignedIn');
-          }
+    if (nextProps.userStatus === 'NEW_USER') {
+      console.log('Navigating on sign up');
+      this.props.navigation.navigate('SignedIn');
+    }
 
-          if (nextProps.authError) {
-            this.setState({ emailHasError: true, emailError: nextProps.authError });
-          }
-        }
-      });
+    if (nextProps.authError) {
+      this.setState({ emailHasError: true, emailError: nextProps.authError });
+    }
   }
 
   onChange(value) {
@@ -208,6 +203,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.user,
     authError: state.authError,
+    userStatus: state.userStatus,
   };
 };
 

@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 
 export const NEW_EVENT = 'NEW_EVENT';
 export const UPDATED_EVENT = 'UPDATED_EVENT';
+export const DELETE_EVENT = 'DELETE_EVENT';
 
 const BASE_URL = 'https://youbring-api.herokuapp.com';
 
@@ -25,12 +26,12 @@ export function newEvent(event, token) {
     })
       .then(res => res.json())
       .then((createdEvent) => {
-        console.log('Event, ', createdEvent);
+        console.log('Events, ', createdEvent.events);
         if (createdEvent.success) {
           console.log('Successfully created event');
           dispatch({
             type: NEW_EVENT,
-            payload: createdEvent,
+            payload: createdEvent.events,
           });
         }
       })
@@ -57,15 +58,39 @@ export function updateEvent(event, token, eventId) {
     })
       .then(res => res.json())
       .then((createdEvent) => {
-        console.log('Event, ', createdEvent);
+        console.log('Events, ', createdEvent.events);
         if (createdEvent.success) {
           console.log('Successfully created event');
           dispatch({
             type: UPDATED_EVENT,
-            payload: createdEvent,
+            payload: createdEvent.events,
           });
         }
       })
       .catch(error => console.log('Error creating event ', error));
+  };
+}
+
+export function deleteEvent(token, eventId) {
+  return (dispatch) => {
+    return fetch(`${BASE_URL}/events/${eventId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+      .then(res => res.json())
+      .then((deletedEvent) => {
+        console.log('DELETED Event, ', deletedEvent.events);
+        if (deletedEvent.success) {
+          console.log('Successfully deleted event');
+          dispatch({
+            type: DELETE_EVENT,
+            payload: deletedEvent.events,
+          });
+        }
+      })
+      .catch(error => console.log('Error deleting event ', error));
   };
 }

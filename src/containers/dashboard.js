@@ -58,6 +58,13 @@ class Dashboard extends Component {
     };
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.setParams({ onGoBack: () => this.forceUpdate() });
+      console.log('Params did mount', this.props.navigation.state.params);
+    }, 2000);
+  }
+
   render() {
     console.log('USER INFO: ', this.props.user.user.events);
     if (this.props.user.user.events) {

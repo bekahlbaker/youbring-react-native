@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage } from 'react-native';
+import { TouchableOpacity, AsyncStorage, Alert } from 'react-native';
 import { Content, View, Button, Text, Container } from 'native-base';
 import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
 import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { newEvent, updateEvent } from '../actions/event.actions';
+import { newEvent, updateEvent, deleteEvent } from '../actions/event.actions';
 import NewItemModal from './newItemModal';
 import fonts from '../FONTS';
 import colors from '../COLORS';
@@ -35,26 +35,31 @@ class AddEvent extends Component {
     });
 
     this.handleSaveEvent = this.handleSaveEvent.bind(this);
+    this.handleDeleteEvent = this.handleDeleteEvent.bind(this);
     this.handleCheckButton = this.handleCheckButton.bind(this);
     this.handleNewItemModal = this.handleNewItemModal.bind(this);
   }
 
-  componentWillMount() {
-    if (this.props.navigation.state.params) {
+  componentDidMount() {
+    // if (this.props.navigation.state.params.event) {
+    setTimeout(() => {
       console.log('Params ', this.props.navigation.state.params);
-      const event = this.props.navigation.state.params.event;
-      const value = {
-        name: event.name,
-        date: new Date(event.date),
-        description: event.description,
-      };
-      this.setState({ value, isNew: false, eventId: event._id });
-    }
+    }, 2000);
+    //   const event = this.props.navigation.state.params.event;
+    //   const value = {
+    //     name: event.name,
+    //     date: new Date(event.date),
+    //     description: event.description,
+    //   };
+    //   this.setState({ value, isNew: false, eventId: event._id });
+    // }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.createdEvent) {
-      console.log('Event was created ', nextProps.createdEvent);
+    if (nextProps.events) {
+      console.log('Event was created', nextProps.events);
+      this.props.navigation.state.params.onGoBack();
+      this.props.navigation.goBack();
     }
   }
 
@@ -85,6 +90,26 @@ class AddEvent extends Component {
     }
   }
 
+  handleDeleteEvent() {
+    Alert.alert(
+      'Are you sure you want to delete this event?',
+      '',
+      [
+        {
+          text: 'Delete',
+          onPress: () =>
+            AsyncStorage.getItem('Token')
+              .then((token) => {
+                console.log('SAVED TOKEN ', token);
+                this.props.deleteEvent(token, this.state.eventId);
+              }),
+          style: 'destructive',
+        },
+        { text: 'Cancel', style: 'cancel' },
+      ],
+    );
+  }
+
   handleCheckButton() {
     this.setState({ checked: !this.state.checked });
   }
@@ -100,6 +125,17 @@ class AddEvent extends Component {
           isNewItemModalVisible={this.state.isNewItemModalVisible}
           handleClose={this.handleNewItemModal}
         />
+      );
+    }
+    return null;
+  }
+
+  renderDeleteButton() {
+    if (!this.state.isNew) {
+      return (
+        <Button style={[styles.redButton, { marginTop: 50 }]} onPress={() => this.handleDeleteEvent()}>
+          <Text style={styles.orangeButtonText}>Delete Event</Text>
+        </Button>
       );
     }
     return null;
@@ -155,8 +191,10 @@ class AddEvent extends Component {
           </TouchableOpacity>
 
           <Button style={[styles.orangeButton, { marginTop: 50 }]} onPress={() => this.handleSaveEvent()}>
-            <Text style={styles.orangeButtonText}>Save Event</Text>
+            <Text style={styles.orangeButtonText}>{this.state.isNew ? 'Save Event' : 'Update Event'}</Text>
           </Button>
+
+          {this.renderDeleteButton()}
 
         </Content>
       </Container>
@@ -166,8 +204,8 @@ class AddEvent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    event: state.createdEvent,
+    events: state.events,
   };
 };
 
-export default connect(mapStateToProps, { newEvent, updateEvent })(AddEvent);
+export default connect(mapStateToProps, { newEvent, updateEvent, deleteEvent })(AddEvent);

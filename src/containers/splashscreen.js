@@ -43,11 +43,11 @@ class SplashScreen extends Component {
   componentWillReceiveProps(nextProps) {
     AsyncStorage.getItem('UserIsSignedIn')
       .then((value) => {
-        console.log(value);
+        console.log('User is signed in', value);
         if (value === null) {
           if (nextProps.user) {
-            console.log('Success logging in');
             setTimeout(() => {
+              console.log('Navigating on splash screen');
               this.props.navigation.navigate('SignedIn');
             }, 2000);
           }

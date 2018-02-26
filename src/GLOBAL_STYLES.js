@@ -28,6 +28,14 @@ export default styles = {
     justifyContent: 'center',
     alignSelf: 'center',
   },
+  redButton: {
+    backgroundColor: colors.error,
+    width: 300,
+    height: 45,
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
   orangeButtonText: [{
     color: colors.white,
     letterSpacing: 0.31,
