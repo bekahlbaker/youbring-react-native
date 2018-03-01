@@ -1,11 +1,35 @@
 import { AsyncStorage } from 'react-native';
 /* eslint-disable import/prefer-default-export */
 
+export const GET_EVENTS = 'GET_EVENTS';
 export const NEW_EVENT = 'NEW_EVENT';
 export const UPDATED_EVENT = 'UPDATED_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 
 const BASE_URL = 'https://youbring-api.herokuapp.com';
+
+export function getEvents(token) {
+  return (dispatch) => {
+    return fetch(`${BASE_URL}/events`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+      .then(res => res.json())
+      .then((response) => {
+        console.log('Events, ', response);
+        if (response.success) {
+          const events = response.events;
+          dispatch({
+            type: GET_EVENTS,
+            payload: events,
+          });
+        }
+      })
+      .catch(error => console.log('Error creating event ', error));
+  };
+}
 
 export function newEvent(event, token) {
   console.log(event);

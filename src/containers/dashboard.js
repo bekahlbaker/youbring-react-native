@@ -1,35 +1,16 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import { TouchableOpacity, FlatList, StatusBar, AsyncStorage } from 'react-native';
 import { View, Button, Text, Container, Header, Left, Right, Body, Title, Subtitle } from 'native-base';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import fonts from '../FONTS';
-import colors from '../COLORS';
-import styles from '../GLOBAL_STYLES';
+import { getEvents } from '../actions/event.actions';
+import fonts from '../GLOBAL_STYLES/FONTS';
+import colors from '../GLOBAL_STYLES/COLORS';
+import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
-
-const dashboardStyles = {
-  welcome: [{
-    marginTop: 30,
-    textAlign: 'center',
-  }, fonts.extraBold36],
-  addNewButtonView: {
-    alignSelf: 'flex-end',
-  },
-  addNewButton: {
-    width: 100,
-    backgroundColor: colors.white,
-    justifyContent: 'flex-end',
-    paddingRight: 20,
-  },
-  addNewButtonText: [{
-    color: colors.orange,
-    textAlign: 'right',
-  }, fonts.regular15],
-};
 
 const eventItemStyles = {
   container: {
@@ -54,32 +35,40 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      events: this.props.user.user.events,
+      events: [],
     };
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.props.navigation.setParams({ onGoBack: () => this.forceUpdate() });
-      console.log('Params did mount', this.props.navigation.state.params);
-    }, 2000);
+  // Get Events when component mounts and set to state
+  // Add Spinner for beginning when state is null
+    AsyncStorage.getItem('Token')
+      .then((token) => {
+        this.props.getEvents(token);
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.events) {
+      this.setState({ events: nextProps.events });
+    }
   }
 
   render() {
     console.log('USER INFO: ', this.props.user.user.events);
     if (this.props.user.user.events) {
       return (
-        <Container style={styles.container}>
+        <Container style={views.container}>
           <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
             <Left style={{ flex: 1 }} />
             <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Title style={styles.headerText}>
+              <Title style={text.headerText}>
                 Home
               </Title>
             </Body>
             <Right style={{ flex: 1 }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEvent')}>
-                <Text style={styles.rightBarButtonText}>Add</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEvent', { event: null, onGoBack: () => this.forceUpdate() })}>
+                <Text style={buttons.rightBarButtonText}>Add</Text>
               </TouchableOpacity>
             </Right>
 
@@ -113,7 +102,8 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    events: state.events,
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getEvents })(Dashboard);

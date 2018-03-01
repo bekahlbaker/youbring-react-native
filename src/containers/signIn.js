@@ -6,9 +6,9 @@ import t from 'tcomb-form-native';
 import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import { emailAuth } from '../actions/auth.actions';
-import fonts from '../FONTS';
-import colors from '../COLORS';
-import styles from '../GLOBAL_STYLES';
+import fonts from '../GLOBAL_STYLES/FONTS';
+import colors from '../GLOBAL_STYLES/COLORS';
+import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 
@@ -124,18 +124,18 @@ class SignIn extends Component {
           secureTextEntry: true,
         },
       },
-      stylesheet: styles.formStyles,
+      stylesheet: formStyles,
     };
     return (
-      <Container style={styles.container} >
+      <Container style={views.container} >
         <Content
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollView}
+          contentContainerStyle={views.scrollView}
         >
 
-          <Text style={styles.logoText}>YouBring</Text>
+          <Text style={text.logoText}>YouBring</Text>
 
-          <View style={styles.view}>
+          <View>
             <t.form.Form
               ref={c => this.form = c}
               type={this.User}
@@ -145,32 +145,32 @@ class SignIn extends Component {
             />
           </View>
 
-          <View style={[styles.rowView, signInStyles.forgotPasswordRow]}>
+          <View style={[views.rowView, signInStyles.forgotPasswordRow]}>
             <CheckBox
               title="Remember me"
               checked={this.state.checked}
-              containerStyle={styles.checkBox}
-              textStyle={styles.gray13Text}
+              containerStyle={inputs.checkBox}
+              textStyle={text.gray13Text}
               onPress={() => this.handleCheckButton()}
               size={20}
               checkedColor={colors.orange}
             />
 
             <TouchableOpacity>
-              <Text style={[styles.buttonTextOnly, { marginTop: 8 }]}>Forgot password?</Text>
+              <Text style={[buttons.buttonTextOnly, { marginTop: 8 }]}>Forgot password?</Text>
             </TouchableOpacity>
           </View>
 
-          <Button style={styles.orangeButton} onPress={() => this.handleSignInButton()}>
-            <Text style={styles.orangeButtonText}>Login</Text>
+          <Button style={buttons.orangeButton} onPress={() => this.handleSignInButton()}>
+            <Text style={buttons.orangeButtonText}>Login</Text>
           </Button>
 
-          <View style={[styles.rowView, signInStyles.registerHereRow]}>
-            <Text style={styles.gray13Text}>Dont have an account?</Text>
+          <View style={[views.rowView, signInStyles.registerHereRow]}>
+            <Text style={text.gray13Text}>Dont have an account?</Text>
             <TouchableOpacity
               onPress={() => this.handleRegisterHereButton()}
             >
-              <Text style={[styles.buttonTextOnly, signInStyles.registerHereButton]}>
+              <Text style={[buttons.buttonTextOnly, signInStyles.registerHereButton]}>
                 Register Here
               </Text>
             </TouchableOpacity>

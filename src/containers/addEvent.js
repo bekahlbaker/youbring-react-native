@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage, Alert } from 'react-native';
+import { TouchableOpacity, AsyncStorage, Alert, StatusBar } from 'react-native';
 import { Content, View, Button, Text, Container, Header, Left, Right, Body, Title, Icon } from 'native-base';
 import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { newEvent, updateEvent, deleteEvent } from '../actions/event.actions';
 import NewItemModal from './newItemModal';
-import fonts from '../FONTS';
-import colors from '../COLORS';
-import styles from '../GLOBAL_STYLES';
+import fonts from '../GLOBAL_STYLES/FONTS';
+import colors from '../GLOBAL_STYLES/COLORS';
+import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 
@@ -38,21 +38,11 @@ class AddEvent extends Component {
     this.handleDeleteEvent = this.handleDeleteEvent.bind(this);
     this.handleCheckButton = this.handleCheckButton.bind(this);
     this.handleNewItemModal = this.handleNewItemModal.bind(this);
+    this.checkIfEventIsNew = this.checkIfEventIsNew.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.navigation.state.params.event) {
-    setTimeout(() => {
-      console.log('Params ', this.props.navigation.state.params);
-    }, 2000);
-      const event = this.props.navigation.state.params.event;
-      const value = {
-        name: event.name,
-        date: new Date(event.date),
-        description: event.description,
-      };
-      this.setState({ value, isNew: false, eventId: event._id });
-    }
+    this.checkIfEventIsNew();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -65,6 +55,18 @@ class AddEvent extends Component {
 
   onChange(value) {
     this.setState({ value });
+  }
+
+  checkIfEventIsNew() {
+    if (this.props.navigation.state.params.event != null) {
+      const event = this.props.navigation.state.params.event;
+      const value = {
+        name: event.name,
+        date: event.date ? new Date(event.date) : new Date(),
+        description: event.description,
+      };
+      this.setState({ value, isNew: false, eventId: event._id });
+    }
   }
 
   handleSaveEvent() {
@@ -81,11 +83,11 @@ class AddEvent extends Component {
       AsyncStorage.getItem('Token')
         .then((token) => {
           console.log('SAVED TOKEN ', token);
-          if (this.state.isNew) {
+          // if (this.state.isNew) {
             this.props.newEvent(createdValue, token);
-          } else {
-            this.props.updateEvent(createdValue, token, this.state.eventId);
-          }
+          // } else {
+          //   this.props.updateEvent(createdValue, token, this.state.eventId);
+          // }
         });
     }
   }
@@ -133,8 +135,8 @@ class AddEvent extends Component {
   renderDeleteButton() {
     if (!this.state.isNew) {
       return (
-        <Button style={[styles.redButton, { marginTop: 50 }]} onPress={() => this.handleDeleteEvent()}>
-          <Text style={styles.orangeButtonText}>Delete Event</Text>
+        <Button style={[buttons.redButton, { marginTop: 50 }]} onPress={() => this.handleDeleteEvent()}>
+          <Text style={buttons.orangeButtonText}>Delete Event</Text>
         </Button>
       );
     }
@@ -154,10 +156,10 @@ class AddEvent extends Component {
           },
         },
       },
-      stylesheet: styles.formStyles,
+      stylesheet: formStyles,
     };
     return (
-      <Container style={styles.container} >
+      <Container style={views.container} >
         {this.renderNewItemModal()}
         <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
           <Left style={{ flex: 1 }}>
@@ -168,18 +170,21 @@ class AddEvent extends Component {
 
           </Left>
           <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Title style={styles.headerText}>
+            <Title style={text.headerText}>
               New Event
             </Title>
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
+        <StatusBar
+          barStyle="light-content"
+        />
         <Content
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollView}
+          contentContainerStyle={views.scrollView}
         >
-          <Text style={styles.logoText}>{this.state.isNew ? 'Add a new event' : 'Update event'}</Text>
-          <View style={styles.view}>
+          <Text style={text.logoText}>{this.state.isNew ? 'Add a new event' : 'Update event'}</Text>
+          <View>
             <t.form.Form
               ref={c => this.form = c}
               type={this.Event}
@@ -193,20 +198,26 @@ class AddEvent extends Component {
             <CheckBox
               title="User can create own items for event."
               checked={this.state.checked}
-              containerStyle={styles.checkBox}
-              textStyle={styles.gray13Text}
+              containerStyle={inputs.checkBox}
+              textStyle={text.gray13Text}
               onPress={() => this.handleCheckButton()}
               size={24}
               checkedColor={colors.orange}
             />
           </View>
 
-          <TouchableOpacity style={{ marginTop: 30, width: 300, height: 45 }} onPress={() => this.handleNewItemModal()}>
-            <Text style={styles.buttonTextOnly}>Add Item</Text>
+          <TouchableOpacity
+            style={{ marginTop: 30, width: 300, height: 45 }}
+            onPress={() => this.handleNewItemModal()}
+          >
+            <Text style={buttons.buttonTextOnly}>Add Item</Text>
           </TouchableOpacity>
 
-          <Button style={[styles.orangeButton, { marginTop: 50 }]} onPress={() => this.handleSaveEvent()}>
-            <Text style={styles.orangeButtonText}>{this.state.isNew ? 'Save Event' : 'Update Event'}</Text>
+          <Button
+            style={[buttons.orangeButton, { marginTop: 50 }]}
+            onPress={() => this.handleSaveEvent()}
+          >
+            <Text style={buttons.orangeButtonText}>{this.state.isNew ? 'Save Event' : 'Update Event'}</Text>
           </Button>
 
           {this.renderDeleteButton()}

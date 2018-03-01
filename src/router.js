@@ -14,6 +14,8 @@ import Dashboard from './containers/dashboard';
 import AddEvent from './containers/addEvent';
 import Details from './containers/eventDetails';
 
+import Contacts from './containers/contacts';
+
 /* eslint-disable react/jsx-filename-extension, react/prop-types */
 
 const EventsStack = StackNavigator({
@@ -21,7 +23,6 @@ const EventsStack = StackNavigator({
     screen: Dashboard,
     navigationOptions: {
       gesturesEnabled: false,
-      headerBackTitle: null,
     },
   },
   Details: {
@@ -29,6 +30,20 @@ const EventsStack = StackNavigator({
   },
   AddEvent: {
     screen: AddEvent,
+  },
+}, {
+  headerMode: 'none',
+  navigationOptions: {
+    headerVisible: false,
+  },
+});
+
+const ContactsStack = StackNavigator({
+  Contacts: {
+    screen: Contacts,
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
   },
 }, {
   headerMode: 'none',
@@ -45,6 +60,19 @@ export const SignedIn = TabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
           name={focused ? 'ios-home' : 'ios-home-outline'}
+          size={30}
+          color={tintColor}
+        />
+      ),
+    },
+  },
+  Contacts: {
+    screen: ContactsStack,
+    navigationOptions: {
+      tabBarLabel: 'Contacts',
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name={focused ? 'ios-people' : 'ios-people-outline'}
           size={30}
           color={tintColor}
         />

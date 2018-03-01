@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StatusBar } from 'react-native';
 import { Content, View, Button, Text, Container, Header, Left, Right, Body, Title, Icon } from 'native-base';
 import moment from 'moment';
-import fonts from '../FONTS';
-import colors from '../COLORS';
-import styles from '../GLOBAL_STYLES';
+import fonts from '../GLOBAL_STYLES/FONTS';
+import colors from '../GLOBAL_STYLES/COLORS';
+import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 
@@ -36,7 +36,7 @@ const eventDetailsStyles = {
 export const EventDetails = ({ navigation }) => {
   event = navigation.state.params.item;
   return (
-    <Container style={styles.container} >
+    <Container style={views.container} >
       <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
         <Left style={{ flex: 1 }}>
 
@@ -46,19 +46,22 @@ export const EventDetails = ({ navigation }) => {
 
         </Left>
         <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Title style={styles.headerText}>
+          <Title style={text.headerText}>
             Event
           </Title>
         </Body>
         <Right style={{ flex: 1 }}>
           <TouchableOpacity onPress={() => navigation.navigate('AddEvent', { event })}>
-            <Text style={styles.rightBarButtonText}>Edit</Text>
+            <Text style={buttons.rightBarButtonText}>Edit</Text>
           </TouchableOpacity>
         </Right>
       </Header>
+      <StatusBar
+        barStyle="light-content"
+      />
       <Content
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
+        contentContainerStyle={views.scrollView}
       >
         <Text style={eventDetailsStyles.title}>
           {event.name}
@@ -78,7 +81,7 @@ export const EventDetails = ({ navigation }) => {
 EventDetails.navigationOptions = ({ navigation }) => ({
   headerRight: (
     <TouchableOpacity onPress={() => navigation.navigate('AddEvent', { event })}>
-      <Text style={styles.rightBarButtonText}>Edit</Text>
+      <Text style={buttons.rightBarButtonText}>Edit</Text>
     </TouchableOpacity>
   ),
 });

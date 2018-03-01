@@ -4,8 +4,9 @@ import { Text, Container } from 'native-base';
 import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import { emailAuth } from '../actions/auth.actions';
-import fonts from '../FONTS';
-import colors from '../COLORS';
+import fonts from '../GLOBAL_STYLES/FONTS';
+import colors from '../GLOBAL_STYLES/COLORS';
+import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 

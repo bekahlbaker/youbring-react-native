@@ -5,7 +5,9 @@ import t from 'tcomb-form-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
 import { newUser, facebookAuth } from '../actions/auth.actions';
-import styles from '../GLOBAL_STYLES';
+import fonts from '../GLOBAL_STYLES/FONTS';
+import colors from '../GLOBAL_STYLES/COLORS';
+import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension, class-methods-use-this */
 
@@ -140,19 +142,19 @@ class SignUp extends Component {
           secureTextEntry: true,
         },
       },
-      stylesheet: styles.formStyles,
+      stylesheet: formStyles,
     };
 
     return (
-      <Container style={styles.container} >
+      <Container style={views.container} >
         <Content
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollView}
+          contentContainerStyle={views.scrollView}
         >
 
-          <Text style={styles.logoText}>YouBring</Text>
+          <Text style={text.logoText}>YouBring</Text>
 
-          <View style={styles.view}>
+          <View>
             <t.form.Form
               ref={c => this.form = c}
               type={this.User}
@@ -163,32 +165,32 @@ class SignUp extends Component {
           </View>
 
           <View style={signUpStyles.ORview}>
-            <Text style={styles.gray13Text}>OR</Text>
+            <Text style={text.gray13Text}>OR</Text>
           </View>
 
-          <Button style={styles.facebookButton}onPress={() => this.handleSignUpWithFacebookButton()}>
-            <Text style={styles.facebookButtonText}>Sign Up With Facebook</Text>
+          <Button style={buttons.facebookButton}onPress={() => this.handleSignUpWithFacebookButton()}>
+            <Text style={buttons.facebookButtonText}>Sign Up With Facebook</Text>
           </Button>
 
-          <Button style={styles.orangeButton} onPress={() => this.handleSignUpButton()}>
-            <Text style={styles.orangeButtonText}>Sign Up</Text>
+          <Button style={buttons.orangeButton} onPress={() => this.handleSignUpButton()}>
+            <Text style={buttons.orangeButtonText}>Sign Up</Text>
           </Button>
 
-          <View style={[styles.rowView, signUpStyles.termsOfUseRow]}>
-            <Text style={styles.gray13Text}>By signing up, you agree to the </Text>
+          <View style={[views.rowView, signUpStyles.termsOfUseRow]}>
+            <Text style={text.gray13Text}>By signing up, you agree to the </Text>
             <TouchableOpacity
               onPress={this.handleRegisterHereButton}
             >
-              <Text style={[styles.buttonTextOnly]}>Terms of Use</Text>
+              <Text style={[buttons.buttonTextOnly]}>Terms of Use</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.rowView, signUpStyles.loginRow]}>
-            <Text style={styles.gray13Text}>Already have an account?</Text>
+          <View style={[views.rowView, signUpStyles.loginRow]}>
+            <Text style={text.gray13Text}>Already have an account?</Text>
             <TouchableOpacity
               onPress={() => this.handleSignInButton()}
             >
-              <Text style={[styles.buttonTextOnly, signUpStyles.loginButton]}>
+              <Text style={[buttons.buttonTextOnly, signUpStyles.loginButton]}>
                 Login Here
               </Text>
             </TouchableOpacity>
