@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, StatusBar } from 'react-native';
 import { Text, Container } from 'native-base';
 import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
@@ -66,6 +66,9 @@ class SplashScreen extends Component {
   render() {
     return (
       <Container style={splashScreenStyles.splashscreenContainer}>
+        <StatusBar
+          barStyle="light-content"
+        />
         <Text style={splashScreenStyles.welcomeText}>
         YouBring
         </Text>

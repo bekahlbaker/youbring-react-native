@@ -68,7 +68,7 @@ class Dashboard extends Component {
             </Body>
             <Right style={{ flex: 1 }}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEvent', { event: null, onGoBack: () => this.forceUpdate() })}>
-                <Text style={buttons.rightBarButtonText}>Add</Text>
+                <Text style={buttons.rightBarButtonText}>New</Text>
               </TouchableOpacity>
             </Right>
 
