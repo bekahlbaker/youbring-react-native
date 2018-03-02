@@ -8,9 +8,7 @@ import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLE
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 
-let event = {};
-
-const eventDetailsStyles = {
+const profileStyles = {
   editButtonView: {
     alignSelf: 'flex-end',
   },
@@ -33,25 +31,20 @@ const eventDetailsStyles = {
   }, fonts.regular15],
 };
 
-export const EventDetails = ({ navigation }) => {
-  event = navigation.state.params.item;
+const Profile = ({ navigation }) => {
   return (
     <Container style={views.container} >
       <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
         <Left style={{ flex: 1 }}>
 
-          <Button transparent onPress={() => navigation.goBack()}>
-            <Icon style={{ color: colors.white }} name="arrow-back" />
-          </Button>
-
         </Left>
         <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Title style={text.headerText}>
-            Event
+            Profile
           </Title>
         </Body>
         <Right style={{ flex: 1 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('AddEvent', { event })}>
+          <TouchableOpacity>
             <Text style={buttons.rightBarButtonText}>Edit</Text>
           </TouchableOpacity>
         </Right>
@@ -63,19 +56,10 @@ export const EventDetails = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={views.scrollView}
       >
-        <Text style={eventDetailsStyles.title}>
-          {event.name}
-        </Text>
-
-        <Text style={eventDetailsStyles.description}>{moment(event.date).format('MMM DD YYYY, h:mm a')}</Text>
-
-        <Text style={eventDetailsStyles.description}>
-          {event.description}
-        </Text>
-
+        <Text>About Me</Text>
       </Content>
     </Container>
   );
 };
 
-export default EventDetails;
+export default Profile;

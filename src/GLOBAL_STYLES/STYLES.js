@@ -25,6 +25,22 @@ export const views = {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  listRowView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  separator: {
+    width: deviceWidth,
+    alignSelf: 'center',
+    height: 1,
+    backgroundColor: colors.lightGray,
+    marginTop: 4,
+  },
+  arrow: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    paddingRight: 16,
+  },
 };
 
 /*
@@ -84,6 +100,16 @@ export const inputs = {
     borderColor: colors.white,
     height: 30,
     backgroundColor: colors.white,
+  },
+};
+
+/*
+-------------- Lists --------------
+*/
+export const lists = {
+  flatList: {
+    backgroundColor: colors.white,
+    width: deviceWidth,
   },
 };
 

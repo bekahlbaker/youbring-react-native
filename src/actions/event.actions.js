@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+
 /* eslint-disable import/prefer-default-export */
 
 export const GET_EVENTS = 'GET_EVENTS';

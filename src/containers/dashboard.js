@@ -8,7 +8,7 @@ import moment from 'moment';
 import { getEvents } from '../actions/event.actions';
 import fonts from '../GLOBAL_STYLES/FONTS';
 import colors from '../GLOBAL_STYLES/COLORS';
-import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
+import { views, buttons, inputs, text, formStyles, lists } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
 
@@ -21,13 +21,10 @@ const eventItemStyles = {
   },
   title: [{
     color: colors.navy,
-  }, fonts.semiBold15],
-  description: [{
-    color: colors.navy,
-  }, fonts.regular15],
-  date: [{
-    color: colors.navy,
-  }, fonts.regular15],
+    paddingTop: 8,
+    paddingLeft: 16,
+    paddingBottom: 8,
+  }, fonts.regular19],
 };
 
 class Dashboard extends Component {
@@ -63,7 +60,7 @@ class Dashboard extends Component {
             <Left style={{ flex: 1 }} />
             <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <Title style={text.headerText}>
-                Home
+                Events
               </Title>
             </Body>
             <Right style={{ flex: 1 }}>
@@ -77,16 +74,24 @@ class Dashboard extends Component {
             barStyle="light-content"
           />
           <FlatList
+            style={lists.flatList}
             data={this.state.events}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                style={eventItemStyles.container}
-                onPress={() => this.props.navigation.navigate('Details', { item })}
-              >
-                <Text style={eventItemStyles.title}>{item.name}</Text>
-                <Text style={eventItemStyles.description}>{item.description}</Text>
-                <Text style={eventItemStyles.date}>{moment(item.date).format('MMM DD YYYY, h:mm a')}</Text>
-              </TouchableOpacity>
+              <View>
+                <TouchableOpacity
+                  style={views.listRowView}
+                  onPress={() => this.props.navigation.navigate('Details', { item })}
+                >
+                  <Text style={eventItemStyles.title}>{item.name}</Text>
+                  <Ionicons
+                    style={views.arrow}
+                    name='ios-arrow-forward'
+                    size={30}
+                    color={colors.lightGray}
+                  />
+                </TouchableOpacity>
+                <View style={views.separator} />
+              </View>
             )}
             keyExtractor={item => item._id}
           />

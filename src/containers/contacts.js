@@ -5,15 +5,20 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import { getEvents } from '../actions/event.actions';
+import { getContacts } from '../actions/contact.actions';
 import fonts from '../GLOBAL_STYLES/FONTS';
 import colors from '../GLOBAL_STYLES/COLORS';
-import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLES';
+import { views, buttons, inputs, text, formStyles, lists } from '../GLOBAL_STYLES/STYLES';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
 
 const contactsStyles = {
-
+  contactName: [{
+    color: colors.darkGray,
+    paddingTop: 8,
+    paddingLeft: 16,
+    paddingBottom: 8,
+  }, fonts.regular19],
 };
 
 class Contacts extends Component {
@@ -21,50 +26,23 @@ class Contacts extends Component {
     super(props);
 
     this.state = {
-      contacts:
-      [
-            {
-            "id": "49bf715d-9402-4b11-b2cc-fab3edf027ce",
-            "name": "Elaina Schneider"
-         },
-            {
-            "id": "6be0dac4-32b9-4569-a447-dd9f2e7f64f9",
-            "name": "Louis Jennings"
-         },
-            {
-            "id": "b22810d6-b95f-45b9-b812-fb2a70f47226",
-            "name": "Saniya Grimes"
-         },
-            {
-            "id": "2034aa57-7d00-48c7-82b2-379a3e4b8243",
-            "name": "Daphne Morgan"
-         },
-            {
-            "id": "05949d56-49e5-4691-bae8-cca477f412a8",
-            "name": "Hattie Lambert"
-         },
-            {
-            "id": "040c44ee-c3cf-441d-8377-f249eb243474",
-            "name": "Omari Mckinney"
-         },
-            {
-            "id": "db0bbe23-4fe5-4676-bfaa-6348746c2564",
-            "name": "Kiersten Kidd"
-         },
-            {
-            "id": "3107da12-e449-4217-a839-ae56ee7b1975",
-            "name": "Sandra Finch"
-         },
-            {
-            "id": "7e8e3be8-8558-46d3-80fc-83263515fecd",
-            "name": "Rosemary Douglas"
-         },
-            {
-            "id": "3684b70d-f127-4385-9b97-bf114917aa41",
-            "name": "Mariano Suarez"
-         }
-      ],
+      contacts: [],
     };
+  }
+
+  componentDidMount() {
+  // Get Contacts when component mounts and set to state
+  // Add Spinner for beginning when state is null
+    AsyncStorage.getItem('Token')
+      .then((token) => {
+        this.props.getContacts(token);
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.contacts) {
+      this.setState({ contacts: nextProps.contacts });
+    }
   }
 
   render() {
@@ -78,7 +56,7 @@ class Contacts extends Component {
             </Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEditContact', { onGoBack: () => this.forceUpdate() })}>
               <Text style={buttons.rightBarButtonText}>New</Text>
             </TouchableOpacity>
           </Right>
@@ -87,17 +65,33 @@ class Contacts extends Component {
           barStyle="light-content"
         />
         <FlatList
+          style={lists.flatList}
           data={this.state.contacts}
-          renderItem={({ contact }) => (
-            <TouchableOpacity>
-              <Text>Contact Name Here</Text>
-            </TouchableOpacity>
+          renderItem={({ item }) => (
+            <View>
+              <TouchableOpacity style={views.listRowView}>
+                <Text style={contactsStyles.contactName}>{item.firstName}</Text>
+                <Ionicons
+                  style={views.arrow}
+                  name='ios-arrow-forward'
+                  size={30}
+                  color={colors.lightGray}
+                />
+              </TouchableOpacity>
+              <View style={views.separator} />
+            </View>
           )}
-          keyExtractor={contact => contact.id}
+          keyExtractor={item => item._id}
         />
       </Container>
     );
   }
 }
 
-export default Contacts;
+const mapStateToProps = (state) => {
+  return {
+    contacts: state.contacts,
+  };
+};
+
+export default connect(mapStateToProps, { getContacts })(Contacts);

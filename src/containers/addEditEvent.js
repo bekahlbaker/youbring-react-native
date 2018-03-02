@@ -14,7 +14,7 @@ import { views, buttons, inputs, text, formStyles } from '../GLOBAL_STYLES/STYLE
 
 /* eslint-disable react/prop-types, react/jsx-filename-extension */
 
-class AddEvent extends Component {
+class AddEditEvent extends Component {
   constructor(props) {
     super(props);
 
@@ -234,4 +234,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { newEvent, updateEvent, deleteEvent })(AddEvent);
+export default connect(mapStateToProps, { newEvent, updateEvent, deleteEvent })(AddEditEvent);

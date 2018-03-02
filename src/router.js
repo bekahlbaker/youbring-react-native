@@ -11,10 +11,13 @@ import SignIn from './containers/signIn';
 
 // Tab Navigator
 import Dashboard from './containers/dashboard';
-import AddEvent from './containers/addEvent';
+import AddEditEvent from './containers/addEditEvent';
 import Details from './containers/eventDetails';
 
 import Contacts from './containers/contacts';
+import AddEditContact from './containers/addEditContact';
+
+import Profile from './containers/profile';
 
 /* eslint-disable react/jsx-filename-extension, react/prop-types */
 
@@ -28,8 +31,8 @@ const EventsStack = StackNavigator({
   Details: {
     screen: Details,
   },
-  AddEvent: {
-    screen: AddEvent,
+  AddEditEvent: {
+    screen: AddEditEvent,
   },
 }, {
   headerMode: 'none',
@@ -45,6 +48,9 @@ const ContactsStack = StackNavigator({
       gesturesEnabled: false,
     },
   },
+  AddEditContact: {
+    screen: AddEditContact,
+  },
 }, {
   headerMode: 'none',
   navigationOptions: {
@@ -56,10 +62,10 @@ export const SignedIn = TabNavigator({
   Dashboard: {
     screen: EventsStack,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Events',
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? 'ios-home' : 'ios-home-outline'}
+          name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
           size={30}
           color={tintColor}
         />
@@ -73,6 +79,19 @@ export const SignedIn = TabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
           name={focused ? 'ios-people' : 'ios-people-outline'}
+          size={30}
+          color={tintColor}
+        />
+      ),
+    },
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      tabBarLabel: 'Profile',
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name={focused ? 'ios-body' : 'ios-body-outline'}
           size={30}
           color={tintColor}
         />

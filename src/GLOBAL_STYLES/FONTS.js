@@ -17,7 +17,11 @@ export default fonts = {
   },
   regular15: {
     fontFamily: 'Barlow-Regular',
-    fontSize: 16,
+    fontSize: 15,
+  },
+  regular19: {
+    fontFamily: 'Barlow-Regular',
+    fontSize: 19,
   },
   thin15: {
     fontFamily: 'Barlow-Thin',
