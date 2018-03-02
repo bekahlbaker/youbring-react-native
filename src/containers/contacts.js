@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, FlatList, StatusBar, AsyncStorage } from 'react-native';
+import { TouchableOpacity, FlatList, StatusBar, AsyncStorage, Animated, Easing } from 'react-native';
 import { View, Button, Text, Container, Header, Left, Right, Body, Title, Subtitle } from 'native-base';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
@@ -27,7 +27,10 @@ class Contacts extends Component {
 
     this.state = {
       contacts: [],
+      listItemIsOpen: false,
     };
+
+    this.spinValue = new Animated.Value(0);
   }
 
   componentDidMount() {
@@ -45,7 +48,35 @@ class Contacts extends Component {
     }
   }
 
+  spin() {
+    this.spinValue.setValue(0);
+    Animated.timing(
+      this.spinValue,
+      {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      },
+    ).start();
+  }
+
+  renderOpenListItem(props) {
+    if (this.state.listItemIsOpen) {
+      return (
+        <View>
+          <Text>{props.lastName}</Text>
+        </View>
+      );
+    }
+    return null;
+  }
+
   render() {
+    const spin = this.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '90deg'],
+    });
     return (
       <Container style={views.container}>
         <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
@@ -69,15 +100,18 @@ class Contacts extends Component {
           data={this.state.contacts}
           renderItem={({ item }) => (
             <View>
-              <TouchableOpacity style={views.listRowView}>
+              <TouchableOpacity style={views.listRowView} onPress={() => this.spin()}>
                 <Text style={contactsStyles.contactName}>{item.firstName}</Text>
-                <Ionicons
-                  style={views.arrow}
-                  name='ios-arrow-forward'
-                  size={30}
-                  color={colors.lightGray}
-                />
+                <Animated.View style={{ transform: [{ rotate: spin }] }}>
+                  <Ionicons
+                    style={views.arrow}
+                    name='ios-arrow-forward'
+                    size={30}
+                    color={colors.lightGray}
+                  />
+                </Animated.View>
               </TouchableOpacity>
+              {this.renderOpenListItem()}
               <View style={views.separator} />
             </View>
           )}

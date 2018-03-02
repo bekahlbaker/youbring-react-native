@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage, Alert, StatusBar } from 'react-native';
+import { TouchableOpacity, AsyncStorage, Alert, StatusBar, Animated, Easing } from 'react-native';
 import { Content, View, Button, Text, Container, Header, Left, Right, Body, Title, Icon } from 'native-base';
 import { CheckBox } from 'react-native-elements';
 import t from 'tcomb-form-native';
