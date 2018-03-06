@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+import EventItem from './eventItem';
 import { getEvents } from '../actions/event.actions';
 import fonts from '../GLOBAL_STYLES/FONTS';
 import colors from '../GLOBAL_STYLES/COLORS';
@@ -34,6 +35,9 @@ class Dashboard extends Component {
     this.state = {
       events: [],
     };
+
+    this.handleEditEvent = this.handleEditEvent.bind(this);
+    this.handleDetails = this.handleDetails.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +55,14 @@ class Dashboard extends Component {
     }
   }
 
+  handleEditEvent(event) {
+    this.props.navigation.navigate('AddEditEvent', { event });
+  }
+
+  handleDetails(event) {
+    this.props.navigation.navigate('Details', { event });
+  }
+
   render() {
     console.log('USER INFO: ', this.props.user.user.events);
     if (this.props.user.user.events) {
@@ -64,7 +76,7 @@ class Dashboard extends Component {
               </Title>
             </Body>
             <Right style={{ flex: 1 }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEvent', { event: null, onGoBack: () => this.forceUpdate() })}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEditEvent', { event: null, onGoBack: () => this.forceUpdate() })}>
                 <Text style={buttons.rightBarButtonText}>New</Text>
               </TouchableOpacity>
             </Right>
@@ -77,21 +89,11 @@ class Dashboard extends Component {
             style={lists.flatList}
             data={this.state.events}
             renderItem={({ item }) => (
-              <View>
-                <TouchableOpacity
-                  style={views.listRowView}
-                  onPress={() => this.props.navigation.navigate('Details', { item })}
-                >
-                  <Text style={eventItemStyles.title}>{item.name}</Text>
-                  <Ionicons
-                    style={views.arrow}
-                    name='ios-arrow-forward'
-                    size={30}
-                    color={colors.lightGray}
-                  />
-                </TouchableOpacity>
-                <View style={views.separator} />
-              </View>
+              <EventItem
+                event={item}
+                handleEdit={this.handleEditEvent}
+                handleDetails={this.handleDetails}
+              />
             )}
             keyExtractor={item => item._id}
           />

@@ -34,7 +34,7 @@ const eventDetailsStyles = {
 };
 
 export const EventDetails = ({ navigation }) => {
-  event = navigation.state.params.item;
+  event = navigation.state.params.event;
   return (
     <Container style={views.container} >
       <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
@@ -51,7 +51,7 @@ export const EventDetails = ({ navigation }) => {
           </Title>
         </Body>
         <Right style={{ flex: 1 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('AddEvent', { event })}>
+          <TouchableOpacity onPress={() => navigation.navigate('AddEditEvent', { event })}>
             <Text style={buttons.rightBarButtonText}>Edit</Text>
           </TouchableOpacity>
         </Right>

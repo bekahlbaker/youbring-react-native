@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import Collapsible from 'react-native-collapsible';
 import ContactItem from './contactItem';
 import { getContacts } from '../actions/contact.actions';
 import fonts from '../GLOBAL_STYLES/FONTS';

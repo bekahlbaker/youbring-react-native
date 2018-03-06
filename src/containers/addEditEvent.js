@@ -135,7 +135,7 @@ class AddEditEvent extends Component {
   renderDeleteButton() {
     if (!this.state.isNew) {
       return (
-        <Button style={[buttons.redButton, { marginTop: 50 }]} onPress={() => this.handleDeleteEvent()}>
+        <Button style={[buttons.redButton, { marginTop: 30 }]} onPress={() => this.handleDeleteEvent()}>
           <Text style={buttons.orangeButtonText}>Delete Event</Text>
         </Button>
       );

@@ -23,6 +23,10 @@ export default fonts = {
     fontFamily: 'Barlow-Regular',
     fontSize: 19,
   },
+  regular22: {
+    fontFamily: 'Barlow-Regular',
+    fontSize: 22,
+  },
   thin15: {
     fontFamily: 'Barlow-Thin',
     fontSize: 18,
