@@ -70,7 +70,7 @@ class SplashScreen extends Component {
           barStyle="light-content"
         />
         <Text style={splashScreenStyles.welcomeText}>
-        YouBring
+
         </Text>
       </Container>
     );

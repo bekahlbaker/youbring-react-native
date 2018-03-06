@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, FlatList, StatusBar, AsyncStorage, Animated, Easing } from 'react-native';
+import { TouchableOpacity, FlatList, StatusBar, AsyncStorage } from 'react-native';
 import { View, Button, Text, Container, Header, Left, Right, Body, Title, Subtitle } from 'native-base';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+import Collapsible from 'react-native-collapsible';
+import ContactItem from './contactItem';
 import { getContacts } from '../actions/contact.actions';
 import fonts from '../GLOBAL_STYLES/FONTS';
 import colors from '../GLOBAL_STYLES/COLORS';
@@ -13,12 +15,7 @@ import { views, buttons, inputs, text, formStyles, lists } from '../GLOBAL_STYLE
 /* eslint-disable react/jsx-filename-extension, react/prop-types, jsx-quotes */
 
 const contactsStyles = {
-  contactName: [{
-    color: colors.darkGray,
-    paddingTop: 8,
-    paddingLeft: 16,
-    paddingBottom: 8,
-  }, fonts.regular19],
+
 };
 
 class Contacts extends Component {
@@ -30,7 +27,7 @@ class Contacts extends Component {
       listItemIsOpen: false,
     };
 
-    this.spinValue = new Animated.Value(0);
+    this.handleEditContact = this.handleEditContact.bind(this);
   }
 
   componentDidMount() {
@@ -48,17 +45,8 @@ class Contacts extends Component {
     }
   }
 
-  spin() {
-    this.spinValue.setValue(0);
-    Animated.timing(
-      this.spinValue,
-      {
-        toValue: 1,
-        duration: 2000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      },
-    ).start();
+  handleEditContact(contact) {
+    this.props.navigation.navigate('AddEditContact', { contact });
   }
 
   renderOpenListItem(props) {
@@ -73,10 +61,6 @@ class Contacts extends Component {
   }
 
   render() {
-    const spin = this.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '90deg'],
-    });
     return (
       <Container style={views.container}>
         <Header hasSubtitle style={{ backgroundColor: colors.navy }}>
@@ -87,7 +71,7 @@ class Contacts extends Component {
             </Title>
           </Body>
           <Right style={{ flex: 1 }}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEditContact', { onGoBack: () => this.forceUpdate() })}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEditContact', { item: null, onGoBack: () => this.forceUpdate() })}>
               <Text style={buttons.rightBarButtonText}>New</Text>
             </TouchableOpacity>
           </Right>
@@ -99,21 +83,10 @@ class Contacts extends Component {
           style={lists.flatList}
           data={this.state.contacts}
           renderItem={({ item }) => (
-            <View>
-              <TouchableOpacity style={views.listRowView} onPress={() => this.spin()}>
-                <Text style={contactsStyles.contactName}>{item.firstName}</Text>
-                <Animated.View style={{ transform: [{ rotate: spin }] }}>
-                  <Ionicons
-                    style={views.arrow}
-                    name='ios-arrow-forward'
-                    size={30}
-                    color={colors.lightGray}
-                  />
-                </Animated.View>
-              </TouchableOpacity>
-              {this.renderOpenListItem()}
-              <View style={views.separator} />
-            </View>
+            <ContactItem
+              contact={item}
+              handleEdit={this.handleEditContact}
+            />
           )}
           keyExtractor={item => item._id}
         />

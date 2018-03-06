@@ -21,8 +21,7 @@ class AddEditContact extends Component {
     this.state = {
       value: {},
       isNew: true,
-      checked: false,
-      eventId: 0,
+      contactId: 0,
     };
 
     this.Contact = t.struct({
@@ -34,14 +33,15 @@ class AddEditContact extends Component {
 
     this.handleSaveContact = this.handleSaveContact.bind(this);
     // this.handleDeleteEvent = this.handleDeleteEvent.bind(this);
-    // this.checkIfEventIsNew = this.checkIfEventIsNew.bind(this);
+    this.checkIfEventIsNew = this.checkIfEventIsNew.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.checkIfEventIsNew();
-  // }
+  componentDidMount() {
+    this.checkIfEventIsNew();
+  }
 
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
     if (nextProps.contacts) {
       console.log('Contact was created', nextProps.contacts);
       this.props.navigation.state.params.onGoBack();
@@ -52,18 +52,20 @@ class AddEditContact extends Component {
   onChange(value) {
     this.setState({ value });
   }
-  //
-  // checkIfEventIsNew() {
-  //   if (this.props.navigation.state.params.event != null) {
-  //     const event = this.props.navigation.state.params.event;
-  //     const value = {
-  //       name: event.name,
-  //       date: event.date ? new Date(event.date) : new Date(),
-  //       description: event.description,
-  //     };
-  //     this.setState({ value, isNew: false, eventId: event._id });
-  //   }
-  // }
+
+  checkIfEventIsNew() {
+    if (this.props.navigation.state.params.contact != null) {
+      console.log('Contact ', this.props.navigation.state.params.contact);
+      const contact = this.props.navigation.state.params.contact;
+      const value = {
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        phone: contact.phone,
+        email: contact.email,
+      };
+      this.setState({ value, isNew: false, contactId: contact._id });
+    }
+  }
 
   handleSaveContact() {
     const value = this.form.getValue();
@@ -80,26 +82,7 @@ class AddEditContact extends Component {
         });
     }
   }
-  //
-  // handleDeleteEvent() {
-  //   Alert.alert(
-  //     'Are you sure you want to delete this event?',
-  //     '',
-  //     [
-  //       {
-  //         text: 'Delete',
-  //         onPress: () =>
-  //           AsyncStorage.getItem('Token')
-  //             .then((token) => {
-  //               console.log('SAVED TOKEN ', token);
-  //               this.props.deleteEvent(token, this.state.eventId);
-  //             }),
-  //         style: 'destructive',
-  //       },
-  //       { text: 'Cancel', style: 'cancel' },
-  //     ],
-  //   );
-  // }
+  
   //
   // handleCheckButton() {
   //   this.setState({ checked: !this.state.checked });
